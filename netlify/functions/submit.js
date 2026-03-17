@@ -122,11 +122,16 @@ exports.handler = async (event) => {
 
     await store.setJSON(`response:${id}`, record);
 
-    // ConvertKit（非同步，失敗不影響問卷送出）
+    // ConvertKit：必須 await，Netlify Function 回傳後 Lambda 會立即終止
     if (record.q22) {
       const personalContent = buildPersonalizedContent(d);
       personalContent.survey_id = id;
-      subscribeToConvertKit(record, personalContent).catch(err => console.error('ConvertKit error:', err));
+      try {
+        await subscribeToConvertKit(record, personalContent);
+      } catch (err) {
+        console.error('ConvertKit error:', err.message);
+        // 不影響問卷送出結果
+      }
     }
 
     return {

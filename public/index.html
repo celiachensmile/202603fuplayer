@@ -946,7 +946,7 @@ body {
       <div style="font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;">NT$16,800</div>
       <div style="font-size:13px;color:#a8d8c4;margin-bottom:4px;">正式售價 NT$26,800｜課程預計 5 月下旬開課</div>
       <div style="font-size:12px;color:#7ee8b8;margin-bottom:20px;">現在預約，正式開課時優先以超早鳥優惠通知您</div>
-      <button id="reserveBtn" onclick="handleReserve()" style="display:inline-flex;align-items:center;gap:10px;background:#f5c842;color:#1a1a1a;border:none;border-radius:50px;padding:16px 36px;font-size:17px;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(245,200,66,.5);transition:transform .15s,box-shadow .15s;width:100%;justify-content:center;max-width:360px;" onmouseover="if(!this.disabled){this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(245,200,66,.6)'}" onmouseout="if(!this.disabled){this.style.transform='';this.style.boxShadow='0 4px 20px rgba(245,200,66,.5)'}">
+      <button type="button" id="reserveBtn" onclick="handleReserve()" style="display:inline-flex;align-items:center;gap:10px;background:#f5c842;color:#1a1a1a;border:none;border-radius:50px;padding:16px 36px;font-size:17px;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(245,200,66,.5);transition:transform .15s,box-shadow .15s;width:100%;justify-content:center;max-width:360px;" onmouseover="if(!this.disabled){this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(245,200,66,.6)'}" onmouseout="if(!this.disabled){this.style.transform='';this.style.boxShadow='0 4px 20px rgba(245,200,66,.5)'}">
         🔔 立即預約超早鳥席位
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
@@ -1052,8 +1052,8 @@ document.querySelectorAll('.scale-wrap').forEach(wrap => {
       const card = wrap.closest('.q-card');
       if (card) { card.classList.add('answered'); card.classList.remove('err'); }
 
-      // Q9 skip logic
-      if (wrap.id === 'q9scale') {
+      // Q10 skip logic（顧問興趣 0 = 跳至聯絡資訊）
+      if (wrap.id === 'q10scale') {
         const val = btn.dataset.val;
         if (val === '0') {
           q10Skipped = true;
@@ -1061,7 +1061,7 @@ document.querySelectorAll('.scale-wrap').forEach(wrap => {
           const skip = document.getElementById('skipSections');
           skip.style.display = 'none';
           document.getElementById('skipMsg').classList.add('show');
-          // 平滑跳到 Q20 聯絡資訊
+          // 平滑跳到聯絡資訊
           setTimeout(() => {
             document.getElementById('q21card').scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 150);
