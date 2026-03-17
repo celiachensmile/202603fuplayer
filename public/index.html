@@ -919,6 +919,7 @@ body {
     </div>
     <div class="ty-title">感謝你完成填答！</div>
     <p class="ty-sub">你的回答對我們非常珍貴。<br>我們將盡快將《第二人生新職涯檢測建議報告》發送至你的 Email，請留意收件匣。</p>
+    <!-- ── 課程亮點 ── -->
     <div class="offer-card">
       <div class="offer-hl">同時啟動你的新職涯媒合機會</div>
       <div class="offer-item">
@@ -938,12 +939,24 @@ body {
         結業後 6 個月免費進入富玩家私域社群持續媒合
       </div>
     </div>
-    <button class="btn-cta" id="reserveBtn" onclick="handleReserve()">
-      預約報名・優先通知我
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
-    <div id="reserveConfirm" style="display:none;margin-top:16px;background:#e8f5f0;border:1px solid #A8D5C5;border-radius:12px;padding:16px 20px;font-size:14px;color:#2d6a56;text-align:center;line-height:1.7;">
-      ✅ 已收到您的預約申請！<br>我們將以您填寫的 Email 優先通知開課資訊。
+
+    <!-- ── 超早鳥預約區塊 ── -->
+    <div style="background:linear-gradient(135deg,#1a7a4a 0%,#0d5c38 100%);border-radius:16px;padding:28px 24px;margin:24px 0 8px;text-align:center;">
+      <div style="font-size:12px;font-weight:700;letter-spacing:2px;color:#7ee8b8;text-transform:uppercase;margin-bottom:8px;">限量 20 席・超早鳥優惠</div>
+      <div style="font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;">NT$16,800</div>
+      <div style="font-size:13px;color:#a8d8c4;margin-bottom:4px;">正式售價 NT$26,800｜課程預計 5 月下旬開課</div>
+      <div style="font-size:12px;color:#7ee8b8;margin-bottom:20px;">現在預約，正式開課時優先以超早鳥優惠通知您</div>
+      <button id="reserveBtn" onclick="handleReserve()" style="display:inline-flex;align-items:center;gap:10px;background:#f5c842;color:#1a1a1a;border:none;border-radius:50px;padding:16px 36px;font-size:17px;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(245,200,66,.5);transition:transform .15s,box-shadow .15s;width:100%;justify-content:center;max-width:360px;" onmouseover="if(!this.disabled){this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(245,200,66,.6)'}" onmouseout="if(!this.disabled){this.style.transform='';this.style.boxShadow='0 4px 20px rgba(245,200,66,.5)'}">
+        🔔 立即預約超早鳥席位
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <div style="font-size:11px;color:#7ee8b8;margin-top:10px;">預約不收費・僅保留優先通知資格</div>
+    </div>
+
+    <div id="reserveConfirm" style="display:none;margin-top:0;background:#e8f5f0;border:1px solid #A8D5C5;border-radius:12px;padding:18px 20px;font-size:14px;color:#2d6a56;text-align:center;line-height:1.8;">
+      🎉 <strong>超早鳥預約成功！</strong><br>
+      我們已收到您的預約申請，課程正式開放報名時將優先以 Email 通知您超早鳥席位。<br>
+      <span style="font-size:12px;color:#5a9a80;margin-top:6px;display:block;">此頁面可安全關閉，感謝您的填答與支持！</span>
     </div>
   </div>
 </div>
@@ -953,15 +966,30 @@ body {
 //  STATE
 // ════════════════════════════════════════
 let q10Skipped = false; // true when Q9 = 0
+let lastSubmissionId = '';  // 問卷送出後儲存 ID，供預約按鈕使用
 
-function handleReserve() {
+async function handleReserve() {
   const btn = document.getElementById('reserveBtn');
-  const confirm = document.getElementById('reserveConfirm');
+  const confirmDiv = document.getElementById('reserveConfirm');
+
+  // 防止重複點擊
+  if (btn.disabled) return;
   btn.disabled = true;
-  btn.style.opacity = '0.6';
+  btn.style.opacity = '0.7';
   btn.style.cursor = 'default';
-  btn.innerHTML = '✅ 已預約報名';
-  confirm.style.display = 'block';
+  btn.innerHTML = '⏳ 預約中…';
+
+  // 若有 ID 則呼叫後端記錄
+  if (lastSubmissionId) {
+    try {
+      await fetch('/api/reserve?id=' + encodeURIComponent(lastSubmissionId));
+    } catch (e) {
+      console.warn('Reserve API error (non-blocking):', e);
+    }
+  }
+
+  btn.innerHTML = '✅ 已預約報名・等待優先通知';
+  confirmDiv.style.display = 'block';
 }
 
 // Required questions when Q9 is NOT 0
@@ -1254,6 +1282,7 @@ document.getElementById('surveyForm').addEventListener('submit', async (e) => {
     });
     const json = await res.json();
     if (json.ok) {
+      lastSubmissionId = json.id || '';
       document.getElementById('formWrap').style.display = 'none';
       document.getElementById('thankyou').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });

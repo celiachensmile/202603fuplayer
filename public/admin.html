@@ -616,7 +616,7 @@ async function renderRecords() {
         <th>#</th><th>提交時間</th><th>Q1 年齡</th><th>Q2 身份</th>
         <th>Q4 年資</th><th>Q5 AI衝擊</th><th>Q6 心情</th>
         <th>Q9 方向</th><th>Q10 顧問興趣</th><th>Q16 定價</th><th>Q18 對實踐營</th>
-        <th>Q21 姓名</th><th>Q22 Email</th>
+        <th>Q21 姓名</th><th>Q22 Email</th><th>預約報名</th>
       </tr></thead>
       <tbody>${rawData.map(r => `<tr>
         <td>${r.id || '—'}</td>
@@ -631,6 +631,7 @@ async function renderRecords() {
         <td class="td-long">${r.q18 || '—'}</td>
         <td>${r.q21 || '—'}</td>
         <td>${r.q22 || '—'}</td>
+        <td style="text-align:center">${r.reserved ? '<span style="color:#1a7a4a;font-weight:700;">✅ 已預約</span>' + (r.reserved_at ? `<br><span style="font-size:11px;color:#888">${r.reserved_at}</span>` : '') : '<span style="color:#bbb">—</span>'}</td>
       </tr>`).join('')}
       </tbody>
     </table>
