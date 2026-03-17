@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>富玩家問卷 — 後台數據</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ════════════════════════════════════════ TOKENS */
+:root {
+  --bg: #F4F4F8;
+  --sidebar: #0F172A;
+  --white: #FFFFFF;
+  --ink: #1A1A2E;
+  --ink-mid: #4A4A6A;
+  --ink-soft: #8888A4;
+  --border: #E2E2EC;
+  --s1: #4D8C78; --s1pale: #EDF7F3;
+  --s2: #C4724A; --s2pale: #FBF0EA;
+  --s3: #3E7FB5; --s3pale: #EBF4FB;
+  --s4: #B5893E; --s4pale: #FBF5E5;
+  --s5: #7A62B5; --s5pale: #F2EFF9;
+  --red: #D94F4F;
+  --green: #22C55E;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans TC', sans-serif; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+/* ════════════════════════════════════════ LOGIN */
+.login-page {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--sidebar);
+  background-image: radial-gradient(ellipse 60% 50% at 20% 100%, rgba(77,140,120,.2) 0%, transparent 60%),
+                    radial-gradient(ellipse 50% 40% at 80% 0%, rgba(196,114,74,.15) 0%, transparent 60%);
+}
+.login-card {
+  background: var(--white); border-radius: 20px;
+  padding: 52px 48px; width: 100%; max-width: 400px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.3);
+}
+.login-brand {
+  font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900;
+  color: var(--ink); margin-bottom: 6px;
+}
+.login-sub { font-size: 13px; color: var(--ink-soft); margin-bottom: 36px; }
+.login-label { font-size: 12px; font-weight: 600; color: var(--ink-mid); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; display: block; }
+.login-input {
+  width: 100%; padding: 13px 16px; border: 1.5px solid var(--border); border-radius: 10px;
+  font-family: 'Noto Sans TC', sans-serif; font-size: 14px; outline: none;
+  transition: border-color .15s; background: #FAFAFA;
+}
+.login-input:focus { border-color: var(--ink); background: var(--white); }
+.login-err { font-size: 12px; color: var(--red); margin-top: 8px; display: none; }
+.btn-login {
+  width: 100%; margin-top: 20px; padding: 14px;
+  background: var(--ink); color: #FFF; border: none; border-radius: 10px;
+  font-family: 'Noto Sans TC', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: background .15s, transform .1s;
+}
+.btn-login:hover { background: #2C2C4E; transform: translateY(-1px); }
+.login-hint { font-size: 12px; color: var(--ink-soft); margin-top: 20px; text-align: center; }
+.login-hint a { color: var(--s1); text-decoration: none; }
+
+/* ════════════════════════════════════════ LAYOUT */
+.admin-layout { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 240px; flex-shrink: 0;
+  background: var(--sidebar); color: #FFF;
+  padding: 28px 0; position: fixed; top: 0; left: 0; bottom: 0;
+  display: flex; flex-direction: column;
+  z-index: 100;
+}
+.sidebar-brand {
+  padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.sidebar-brand-name {
+  font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 900; color: #FFF;
+}
+.sidebar-brand-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 2px; }
+.sidebar-nav { padding: 20px 12px; flex: 1; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; font-weight: 500; color: rgba(255,255,255,.6);
+  transition: all .15s; margin-bottom: 2px; user-select: none;
+}
+.nav-item:hover { background: rgba(255,255,255,.08); color: rgba(255,255,255,.9); }
+.nav-item.active { background: rgba(77,140,120,.25); color: #FFF; }
+.nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+.sidebar-bottom { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,.1); }
+.sidebar-survey-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 14px; border-radius: 8px;
+  font-size: 12px; color: rgba(255,255,255,.5); text-decoration: none;
+  transition: all .15s;
+}
+.sidebar-survey-link:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.8); }
+.btn-export {
+  width: 100%; margin-top: 8px; padding: 10px 14px;
+  background: rgba(77,140,120,.2); border: 1px solid rgba(77,140,120,.4);
+  color: #7FD1B9; border-radius: 8px;
+  font-family: 'Noto Sans TC', sans-serif; font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all .15s; text-align: center;
+}
+.btn-export:hover { background: rgba(77,140,120,.35); }
+
+.main { margin-left: 240px; padding: 36px 32px; min-height: 100vh; }
+
+/* ════════════════════════════════════════ TOP BAR */
+.top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 32px;
+}
+.page-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); }
+.refresh-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--white); font-family: 'Noto Sans TC', sans-serif;
+  font-size: 12px; color: var(--ink-mid); cursor: pointer; transition: all .15s;
+}
+.refresh-btn:hover { border-color: var(--s1); color: var(--s1); }
+
+/* ════════════════════════════════════════ STAT CARDS */
+.stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 32px; }
+.stat-card {
+  background: var(--white); border-radius: 14px;
+  padding: 22px 20px 18px; border: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  position: relative; overflow: hidden;
+}
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.stat-card.c1::before { background: var(--s1); }
+.stat-card.c2::before { background: var(--s2); }
+.stat-card.c3::before { background: var(--s3); }
+.stat-card.c4::before { background: var(--s4); }
+.stat-card.c5::before { background: var(--s5); }
+.stat-label { font-size: 11px; font-weight: 600; color: var(--ink-soft); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+.stat-val { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+.stat-sub { font-size: 11px; color: var(--ink-soft); }
+
+/* ════════════════════════════════════════ TABS */
+.tabs { display: flex; gap: 4px; margin-bottom: 24px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 5px; width: fit-content; }
+.tab-btn {
+  padding: 9px 20px; border-radius: 7px; border: none;
+  font-family: 'Noto Sans TC', sans-serif; font-size: 13px; font-weight: 500;
+  color: var(--ink-soft); background: transparent; cursor: pointer; transition: all .15s;
+}
+.tab-btn.active { background: var(--ink); color: #FFF; }
+.tab-btn:hover:not(.active) { background: var(--bg); color: var(--ink); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ════════════════════════════════════════ CHART GRID */
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.chart-grid.wide { grid-template-columns: 1fr; }
+.chart-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 14px;
+  padding: 24px 24px 20px; box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.chart-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.chart-sub { font-size: 11px; color: var(--ink-soft); margin-bottom: 18px; }
+.chart-wrap { position: relative; }
+.chart-wrap canvas { max-height: 260px; }
+
+/* Bar chart (CSS) */
+.bar-list { display: flex; flex-direction: column; gap: 10px; }
+.bar-item { }
+.bar-item-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.bar-item-text { font-size: 12px; color: var(--ink-mid); line-height: 1.4; flex: 1; margin-right: 10px; }
+.bar-item-pct { font-size: 12px; font-weight: 700; color: var(--ink); }
+.bar-track { height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width .6s ease; background: var(--bar-color, var(--s1)); }
+
+/* ════════════════════════════════════════ CROSS ANALYSIS */
+.cross-section { margin-bottom: 28px; }
+.cross-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.cross-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.cross-table th { background: var(--sidebar); color: rgba(255,255,255,.8); padding: 9px 12px; text-align: left; font-weight: 600; letter-spacing: .04em; }
+.cross-table th:first-child { border-radius: 8px 0 0 8px; }
+.cross-table th:last-child { border-radius: 0 8px 8px 0; }
+.cross-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--ink-mid); }
+.cross-table tr:last-child td { border-bottom: none; }
+.cross-table tr:hover td { background: var(--bg); }
+.heat-cell { display: inline-block; min-width: 36px; padding: 3px 8px; border-radius: 5px; text-align: center; font-weight: 600; color: var(--white); font-size: 12px; }
+
+/* ════════════════════════════════════════ RECORDS TABLE */
+.records-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.records-count { font-size: 13px; color: var(--ink-soft); }
+.table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+.data-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 900px; }
+.data-table th { background: var(--sidebar); color: rgba(255,255,255,.8); padding: 11px 14px; text-align: left; font-weight: 600; font-size: 11px; letter-spacing: .06em; white-space: nowrap; }
+.data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--ink-mid); vertical-align: top; }
+.data-table td:first-child { font-weight: 700; color: var(--ink); }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: #FAFAFA; }
+.td-long { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ════════════════════════════════════════ EMPTY STATE */
+.empty { text-align: center; padding: 60px 24px; color: var(--ink-soft); }
+.empty-icon { font-size: 40px; margin-bottom: 12px; opacity: .3; }
+.empty-text { font-size: 14px; }
+
+/* ════════════════════════════════════════ LOADING */
+.loading { text-align: center; padding: 40px; color: var(--ink-soft); font-size: 13px; }
+
+/* ════════════════════════════════════════ RESPONSIVE */
+@media (max-width: 900px) {
+  .sidebar { width: 60px; }
+  .sidebar-brand, .nav-item span, .sidebar-survey-link span, .btn-export { display: none; }
+  .main { margin-left: 60px; padding: 24px 16px; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .chart-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ════════════════════════════ -->
+<div id="loginPage" class="login-page">
+  <div class="login-card">
+    <div class="login-brand">富玩家問卷後台</div>
+    <div class="login-sub">請輸入管理員密碼以查看數據</div>
+    <label class="login-label" for="pwInput">管理員密碼</label>
+    <input class="login-input" id="pwInput" type="password" placeholder="••••••••••" autocomplete="current-password">
+    <div class="login-err" id="loginErr">密碼錯誤，請再試一次</div>
+    <button class="btn-login" onclick="doLogin()">登入後台</button>
+    <p class="login-hint"><a href="index.html">← 回到問卷頁面</a></p>
+  </div>
+</div>
+
+<!-- ══ ADMIN ════════════════════════════ -->
+<div id="adminApp" style="display:none;">
+  <div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-name">富玩家</div>
+        <div class="sidebar-brand-sub">問卷數據後台</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" onclick="showTab('overview')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          <span>總覽分析</span>
+        </div>
+        <div class="nav-item" onclick="showTab('cross')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span>交叉分析</span>
+        </div>
+        <div class="nav-item" onclick="showTab('records')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>原始記錄</span>
+        </div>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="index.html" target="_blank" class="sidebar-survey-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span>前台問卷</span>
+        </a>
+        <button class="btn-export" onclick="doExport()">下載 CSV 原始資料</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main" id="mainContent">
+      <div class="loading" id="loadingMsg">資料載入中…</div>
+    </main>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════
+let pw = '';
+let statsData = null;
+let rawData = null;
+let currentTab = 'overview';
+const chartInstances = {};
+
+// ════════════════════════════════════════
+//  LOGIN
+// ════════════════════════════════════════
+document.getElementById('pwInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+async function doLogin() {
+  const val = document.getElementById('pwInput').value.trim();
+  if (!val) return;
+  try {
+    const res = await fetch('/api/stats?pw=' + encodeURIComponent(val));
+    if (res.status === 401) { document.getElementById('loginErr').style.display = 'block'; return; }
+    if (!res.ok) throw new Error();
+    pw = val;
+    statsData = await res.json();
+    document.getElementById('loginErr').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('adminApp').style.display = 'block';
+    renderApp();
+  } catch (e) {
+    document.getElementById('loginErr').textContent = '連線失敗，請確認後台是否正常運行';
+    document.getElementById('loginErr').style.display = 'block';
+  }
+}
+
+// ════════════════════════════════════════
+//  FETCH DATA
+// ════════════════════════════════════════
+async function loadRaw() {
+  if (rawData) return;
+  const res = await fetch('/api/responses', { headers: { 'x-admin-password': pw } });
+  rawData = await res.json();
+}
+
+async function refreshData() {
+  const res = await fetch('/api/stats', { headers: { 'x-admin-password': pw } });
+  statsData = await res.json();
+  rawData = null;
+  renderApp();
+}
+
+// ════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════
+function renderApp() {
+  const main = document.getElementById('mainContent');
+  main.innerHTML = buildAppHTML();
+  attachTabEvents();
+  renderCurrentTab();
+}
+
+function buildAppHTML() {
+  return `
+  <div class="top-bar">
+    <div class="page-title">數據總覽</div>
+    <button class="refresh-btn" onclick="refreshData()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      重新整理
+    </button>
+  </div>
+  ${buildStatCards()}
+  <div class="tabs" id="tabBar">
+    <button class="tab-btn active" data-tab="overview">總覽分析</button>
+    <button class="tab-btn" data-tab="cross">交叉分析</button>
+    <button class="tab-btn" data-tab="records">原始記錄</button>
+  </div>
+  <div id="tabOverview" class="tab-panel active"></div>
+  <div id="tabCross" class="tab-panel"></div>
+  <div id="tabRecords" class="tab-panel"></div>
+  `;
+}
+
+function buildStatCards() {
+  const s = statsData.summaryCards || {};
+  const total = statsData.total || 0;
+  return `
+  <div class="stat-grid">
+    <div class="stat-card c1">
+      <div class="stat-label">總回收份數</div>
+      <div class="stat-val">${total}</div>
+      <div class="stat-sub">份問卷</div>
+    </div>
+    <div class="stat-card c2">
+      <div class="stat-label">主要年齡層</div>
+      <div class="stat-val" style="font-size:18px">${s.topAge || '—'}</div>
+      <div class="stat-sub">最多填答族群</div>
+    </div>
+    <div class="stat-card c3">
+      <div class="stat-label">AI 衝擊感受</div>
+      <div class="stat-val">${s.avgAiImpact || '—'}</div>
+      <div class="stat-sub">平均分（滿分 5）</div>
+    </div>
+    <div class="stat-card c4">
+      <div class="stat-label">顧問興趣指數</div>
+      <div class="stat-val">${s.avgInterest || '—'}</div>
+      <div class="stat-sub">平均分（滿分 5）</div>
+    </div>
+    <div class="stat-card c5">
+      <div class="stat-label">有意願報名比例</div>
+      <div class="stat-val">${s.interestedPct != null ? s.interestedPct + '%' : '—'}</div>
+      <div class="stat-sub">非常有興趣 + 需更多資訊</div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+//  TABS
+// ════════════════════════════════════════
+function attachTabEvents() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      showTab(btn.dataset.tab);
+    });
+  });
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+}
+
+function showTab(name) {
+  currentTab = name;
+  ['overview','cross','records'].forEach(t => {
+    document.getElementById('tabOverview')?.parentElement;
+    const el = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+    if (el) el.classList.toggle('active', t === name);
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  renderCurrentTab();
+}
+
+function renderCurrentTab() {
+  if (currentTab === 'overview') renderOverview();
+  if (currentTab === 'cross') renderCross();
+  if (currentTab === 'records') renderRecords();
+}
+
+// ════════════════════════════════════════
+//  CHART COLORS
+// ════════════════════════════════════════
+const PALETTE = ['#4D8C78','#C4724A','#3E7FB5','#B5893E','#7A62B5','#E05A5A','#22C55E','#F59E0B','#6366F1','#EC4899'];
+
+// ════════════════════════════════════════
+//  OVERVIEW TAB
+// ════════════════════════════════════════
+function renderOverview() {
+  const el = document.getElementById('tabOverview');
+  if (!el || !statsData || !statsData.charts) { el.innerHTML = '<div class="empty"><div class="empty-icon">📊</div><div class="empty-text">尚無數據</div></div>'; return; }
+
+  const c = statsData.charts;
+  el.innerHTML = `
+  <div class="chart-grid">
+    ${chartCardDonut('c-q1','Q1 年齡分布','填答者年齡區間')}
+    ${chartCardDonut('c-q17','Q17 對實踐營的反應','首次看到課程介紹的反應')}
+    ${chartCardDonut('c-q15','Q15 願意投資價格','工作坊費用預期')}
+    ${chartCardDonut('c-q4','Q4 工作年資','主要專業領域累積年資')}
+  </div>
+  <div style="height:18px"></div>
+  <div class="chart-grid">
+    ${chartCardBar('c-q7','Q7 職涯擔憂（複選）','最多 3 項，佔總人數比')}
+    ${chartCardBar('c-q10','Q10 顧問障礙（複選）','目前最大障礙')}
+  </div>
+  <div style="height:18px"></div>
+  <div class="chart-grid">
+    ${chartCardBar('c-q13','Q13 希望得到的協助（複選）','最多 4 項')}
+    ${chartCardBar('c-q16','Q16 報名決策關鍵（複選）','最多 3 項')}
+  </div>
+  <div style="height:18px"></div>
+  <div class="chart-grid">
+    ${chartCardDonut('c-q9','Q9 顧問興趣分數','1–5 分量表分布')}
+    ${chartCardDonut('c-q5','Q5 AI 衝擊感受','1–5 分量表分布')}
+    ${chartCardDonut('c-q12','Q12 每月可投入時間','')}
+    ${chartCardDonut('c-q6','Q6 職涯心情','目前心情狀態')}
+  </div>
+  `;
+
+  // Draw charts
+  drawDonut('c-q1', c.q1);
+  drawDonut('c-q17', c.q17, true);
+  drawDonut('c-q15', c.q15, true);
+  drawDonut('c-q4', c.q4);
+  drawBars('c-q7', c.q7, '#C4724A');
+  drawBars('c-q10', c.q10, '#3E7FB5');
+  drawBars('c-q13', c.q13, '#4D8C78');
+  drawBars('c-q16', c.q16, '#B5893E');
+  drawDonut('c-q9', c.q9);
+  drawDonut('c-q5', c.q5);
+  drawDonut('c-q12', c.q12);
+  drawDonut('c-q6', c.q6);
+}
+
+function chartCardDonut(id, title, sub) {
+  return `<div class="chart-card"><div class="chart-title">${title}</div><div class="chart-sub">${sub}</div><div class="chart-wrap"><canvas id="${id}"></canvas></div></div>`;
+}
+function chartCardBar(id, title, sub) {
+  return `<div class="chart-card"><div class="chart-title">${title}</div><div class="chart-sub">${sub}</div><div id="${id}"></div></div>`;
+}
+
+function drawDonut(id, data) {
+  if (!data || !data.length) return;
+  const ctx = document.getElementById(id)?.getContext('2d');
+  if (!ctx) return;
+  if (chartInstances[id]) { chartInstances[id].destroy(); }
+  chartInstances[id] = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: data.map(d => d.label),
+      datasets: [{ data: data.map(d => d.count), backgroundColor: PALETTE, borderWidth: 2, borderColor: '#FFF' }]
+    },
+    options: {
+      plugins: { legend: { position: 'bottom', labels: { font: { family: 'Noto Sans TC', size: 11 }, boxWidth: 12, padding: 10 } } },
+      cutout: '60%', responsive: true
+    }
+  });
+}
+
+function drawBars(id, data, color) {
+  const el = document.getElementById(id);
+  if (!el || !data || !data.length) return;
+  const top = data.slice(0, 8);
+  const max = top[0]?.pct || 1;
+  el.innerHTML = `<div class="bar-list">${top.map(d => `
+    <div class="bar-item">
+      <div class="bar-item-label">
+        <span class="bar-item-text">${d.label}</span>
+        <span class="bar-item-pct">${d.pct}%</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${d.pct}%;--bar-color:${color}"></div></div>
+    </div>`).join('')}</div>`;
+}
+
+// ════════════════════════════════════════
+//  CROSS ANALYSIS TAB
+// ════════════════════════════════════════
+function renderCross() {
+  const el = document.getElementById('tabCross');
+  if (!el || !statsData || !statsData.crossAnalysis) { el.innerHTML = '<div class="empty"><div class="empty-text">尚無數據</div></div>'; return; }
+  const ca = statsData.crossAnalysis;
+  el.innerHTML = `
+  <div class="chart-card" style="margin-bottom:18px">
+    <div class="cross-section">
+      <div class="cross-title">交叉分析一：年齡層 × 顧問興趣（Q1 × Q9）</div>
+      ${buildCrossTable(ca.ageInterest, '年齡層', ['1','2','3','4','5'])}
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom:18px">
+    <div class="cross-section">
+      <div class="cross-title">交叉分析二：AI 衝擊感受 × 顧問興趣（Q5 × Q9）</div>
+      ${buildCrossTable(ca.aiInterest, 'AI 衝擊分數', ['1','2','3','4','5'])}
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom:18px">
+    <div class="cross-section">
+      <div class="cross-title">交叉分析三：年齡層 × 主要擔憂（Q1 × Q7）熱度圖</div>
+      ${buildCrossMultiTable(ca.ageConcern, '年齡層')}
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom:18px">
+    <div class="cross-section">
+      <div class="cross-title">交叉分析四：職涯身份 × 價格接受度（Q2 × Q15）</div>
+      ${buildCrossMultiTable(ca.rolePrice, '職涯身份')}
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom:18px">
+    <div class="cross-section">
+      <div class="cross-title">交叉分析五：職涯心情 × 顧問障礙（Q6 × Q10）</div>
+      ${buildCrossMultiTable(ca.moodObstacle, '心情狀態')}
+    </div>
+  </div>`;
+}
+
+function buildCrossTable(matrix, rowLabel, colKeys) {
+  if (!matrix || !Object.keys(matrix).length) return '<p style="font-size:13px;color:var(--ink-soft);padding:12px 0">尚無足夠數據</p>';
+  const rows = Object.keys(matrix);
+  const cols = colKeys || [...new Set(rows.flatMap(r => Object.keys(matrix[r])))].sort();
+  const maxVal = Math.max(...rows.flatMap(r => cols.map(c => matrix[r][c] || 0)));
+
+  return `<div class="table-wrap"><table class="cross-table">
+    <thead><tr><th>${rowLabel}</th>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(row => `<tr><td style="font-weight:600;color:var(--ink)">${row}</td>${cols.map(col => {
+      const v = matrix[row]?.[col] || 0;
+      const intensity = maxVal > 0 ? v / maxVal : 0;
+      const alpha = Math.round(intensity * 100);
+      const bg = alpha > 0 ? `rgba(77,140,120,${(intensity * 0.8 + 0.1).toFixed(2)})` : 'transparent';
+      const color = intensity > 0.4 ? '#FFF' : 'var(--ink)';
+      return `<td><span class="heat-cell" style="background:${bg};color:${color}">${v > 0 ? v : '—'}</span></td>`;
+    }).join('')}</tr>`).join('')}
+    </tbody></table></div>`;
+}
+
+function buildCrossMultiTable(matrix, rowLabel) {
+  if (!matrix || !Object.keys(matrix).length) return '<p style="font-size:13px;color:var(--ink-soft);padding:12px 0">尚無足夠數據</p>';
+  const rows = Object.keys(matrix).slice(0, 8);
+  const cols = [...new Set(rows.flatMap(r => Object.keys(matrix[r])))].slice(0, 6);
+  const maxVal = Math.max(...rows.flatMap(r => cols.map(c => matrix[r][c] || 0)));
+
+  return `<div class="table-wrap"><table class="cross-table">
+    <thead><tr><th>${rowLabel}</th>${cols.map(c => `<th style="max-width:100px;overflow:hidden;text-overflow:ellipsis">${c.length > 10 ? c.slice(0,10)+'…' : c}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(row => `<tr><td style="font-weight:600;color:var(--ink);max-width:150px">${row}</td>${cols.map(col => {
+      const v = matrix[row]?.[col] || 0;
+      const intensity = maxVal > 0 ? v / maxVal : 0;
+      const bg = intensity > 0 ? `rgba(62,127,181,${(intensity * 0.8 + 0.1).toFixed(2)})` : 'transparent';
+      const color = intensity > 0.4 ? '#FFF' : 'var(--ink)';
+      return `<td><span class="heat-cell" style="background:${bg};color:${color}">${v > 0 ? v : '—'}</span></td>`;
+    }).join('')}</tr>`).join('')}
+    </tbody></table></div>`;
+}
+
+// ════════════════════════════════════════
+//  RECORDS TAB
+// ════════════════════════════════════════
+async function renderRecords() {
+  const el = document.getElementById('tabRecords');
+  if (!el) return;
+  el.innerHTML = '<div class="loading">載入原始記錄…</div>';
+  await loadRaw();
+  if (!rawData || !rawData.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">尚無記錄</div></div>'; return; }
+
+  el.innerHTML = `
+  <div class="records-head">
+    <div class="records-count">共 ${rawData.length} 筆記錄，最新在前</div>
+  </div>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr>
+        <th>#</th><th>提交時間</th><th>Q1 年齡</th><th>Q2 身份</th>
+        <th>Q4 年資</th><th>Q5 AI衝擊</th><th>Q6 心情</th>
+        <th>Q9 顧問興趣</th><th>Q15 定價</th><th>Q17 對實踐營</th>
+        <th>Q20 姓名</th><th>Q21 Email</th>
+      </tr></thead>
+      <tbody>${rawData.map(r => `<tr>
+        <td>${r.id || '—'}</td>
+        <td style="white-space:nowrap">${r.submitted_at || '—'}</td>
+        <td>${r.q1 || '—'}</td>
+        <td class="td-long">${r.q2 || '—'}</td>
+        <td>${r.q4 || '—'}</td>
+        <td style="text-align:center">${r.q5 || '—'}</td>
+        <td class="td-long">${r.q6 || '—'}</td>
+        <td style="text-align:center">${r.q9 || '—'}</td>
+        <td class="td-long">${r.q15 || '—'}</td>
+        <td class="td-long">${r.q17 || '—'}</td>
+        <td>${r.q20 || '—'}</td>
+        <td>${r.q21 || '—'}</td>
+      </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+// ════════════════════════════════════════
+//  EXPORT
+// ════════════════════════════════════════
+function doExport() {
+  window.open('/api/export?pw=' + encodeURIComponent(pw), '_blank');
+}
+</script>
+</body>
+</html>

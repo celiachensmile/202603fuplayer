@@ -1,0 +1,8 @@
+{
+  "name": "fuplayer-survey",
+  "version": "1.0.0",
+  "description": "富玩家顧問實踐營 前測問卷",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>富玩家顧問實踐營 — 前測問卷</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   DESIGN TOKENS
+════════════════════════════════════════ */
+:root {
+  --bg: #F5F5F7;
+  --white: #FFFFFF;
+  --ink: #1A1A2E;
+  --ink-mid: #4A4A6A;
+  --ink-soft: #8888A4;
+  --border: #E2E2EC;
+  --hero-bg: #0F172A;
+
+  --s1: #4D8C78;   --s1b: #2E6B56;   --s1pale: #EDF7F3;
+  --s2: #C4724A;   --s2b: #A3542F;   --s2pale: #FBF0EA;
+  --s3: #3E7FB5;   --s3b: #2A6094;   --s3pale: #EBF4FB;
+  --s4: #B5893E;   --s4b: #8F6C25;   --s4pale: #FBF5E5;
+  --s5: #7A62B5;   --s5b: #5C4797;   --s5pale: #F2EFF9;
+
+  --red: #D94F4F;
+  --gold: #FFD700;
+  --radius-card: 14px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+}
+
+/* ════════════════════════════════════════
+   RESET + BASE
+════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ════════════════════════════════════════
+   NAV
+════════════════════════════════════════ */
+.site-nav {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-left { display: flex; align-items: center; }
+.nav-logo-img {
+  height: 40px; width: auto; display: block;
+  object-fit: contain;
+}
+/* Fallback if no logo image */
+.nav-logo-txt {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 900; color: var(--s1);
+  letter-spacing: .02em;
+}
+.nav-right {
+  font-size: 13px; font-weight: 500; color: var(--ink-mid);
+  display: flex; align-items: center; gap: 4px;
+}
+
+/* ════════════════════════════════════════
+   HERO
+════════════════════════════════════════ */
+.hero {
+  background: var(--hero-bg);
+  padding: 80px 24px 96px;
+  position: relative; overflow: hidden; text-align: center;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 10% 110%, rgba(77,140,120,.22) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 90% -10%, rgba(255,180,50,.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  font-size: 12px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(255,215,0,.4);
+  border-radius: 40px; padding: 5px 18px; margin-bottom: 28px;
+  position: relative;
+  text-shadow: 0 0 12px rgba(255,215,0,.5);
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 5.5vw, 52px);
+  font-weight: 900; line-height: 1.2;
+  color: #FFFFFF; margin-bottom: 20px;
+  position: relative;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(255,215,0,.7), 0 0 50px rgba(255,215,0,.35), 0 0 80px rgba(255,180,0,.2);
+}
+.hero-desc {
+  font-size: 15px; line-height: 1.9; color: rgba(255,255,255,.62);
+  max-width: 520px; margin: 0 auto 32px; position: relative;
+}
+.hero-pill {
+  display: inline-flex; align-items: flex-start; gap: 8px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,215,0,.25);
+  border-radius: 40px; padding: 10px 22px;
+  font-size: 13px; color: rgba(255,255,255,.78);
+  position: relative; max-width: 540px; text-align: left; line-height: 1.6;
+}
+.hero-pill strong { color: var(--gold); }
+
+/* ════════════════════════════════════════
+   PROGRESS
+════════════════════════════════════════ */
+.progress-shell {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex; align-items: center; gap: 16px;
+  position: sticky; top: 64px; z-index: 150;
+}
+.progress-track {
+  flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--s1), var(--gold));
+  border-radius: 2px;
+  transition: width .5s cubic-bezier(.4,0,.2,1);
+  width: 0%;
+}
+.progress-steps { display: flex; gap: 6px; }
+.p-step { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background .3s; }
+.p-step.active { background: var(--s1); }
+.p-step.done { background: var(--s1); opacity: .5; }
+.progress-pct { font-size: 12px; font-weight: 600; color: var(--ink-mid); min-width: 32px; text-align: right; }
+
+/* ════════════════════════════════════════
+   FORM WRAPPER
+════════════════════════════════════════ */
+.form-wrap { max-width: 720px; margin: 0 auto; padding: 48px 20px 80px; }
+
+/* ════════════════════════════════════════
+   SECTION HEADER
+════════════════════════════════════════ */
+.sec-header {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius-card);
+  padding: 36px 44px 32px;
+  margin-bottom: 20px; color: #FFFFFF;
+}
+.sec-header.s1 { background: linear-gradient(135deg, var(--s1) 0%, var(--s1b) 100%); }
+.sec-header.s2 { background: linear-gradient(135deg, var(--s2) 0%, var(--s2b) 100%); }
+.sec-header.s3 { background: linear-gradient(135deg, var(--s3) 0%, var(--s3b) 100%); }
+.sec-header.s4 { background: linear-gradient(135deg, var(--s4) 0%, var(--s4b) 100%); }
+.sec-header.s5 { background: linear-gradient(135deg, var(--s5) 0%, var(--s5b) 100%); }
+.sec-bg-num {
+  position: absolute; right: 20px; bottom: -22px;
+  font-family: 'Playfair Display', serif;
+  font-size: 140px; font-weight: 900; line-height: 1;
+  opacity: .1; color: #FFFFFF; pointer-events: none; user-select: none;
+  letter-spacing: -6px;
+}
+.sec-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; opacity: .7; margin-bottom: 8px; }
+.sec-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(18px, 3vw, 24px); font-weight: 700; line-height: 1.35; margin-bottom: 8px; }
+.sec-desc { font-size: 13px; line-height: 1.8; opacity: .75; }
+
+/* ════════════════════════════════════════
+   QUESTION CARD
+════════════════════════════════════════ */
+.q-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 28px 28px 24px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+  transition: border-color .2s;
+  position: relative;
+}
+.q-card:hover { box-shadow: 0 2px 6px rgba(0,0,0,.07), 0 6px 24px rgba(0,0,0,.08); }
+.q-card.answered { }
+.q-card.answered::after {
+  content: '✓'; position: absolute; top: 16px; right: 20px;
+  font-size: 13px; font-weight: 700; color: var(--s1);
+  background: var(--s1pale); border-radius: 50%;
+  width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+}
+.q-card.err { border-left-color: var(--red); }
+
+.a1.answered { border-left-color: var(--s1); }
+.a2.answered { border-left-color: var(--s2); }
+.a3.answered { border-left-color: var(--s3); }
+.a4.answered { border-left-color: var(--s4); }
+.a5.answered { border-left-color: var(--s5); }
+.a1.answered::after { color: var(--s1); background: var(--s1pale); }
+.a2.answered::after { color: var(--s2); background: var(--s2pale); }
+.a3.answered::after { color: var(--s3); background: var(--s3pale); }
+.a4.answered::after { color: var(--s4); background: var(--s4pale); }
+.a5.answered::after { color: var(--s5); background: var(--s5pale); }
+
+.q-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.q-tag { font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--ink-soft); text-transform: uppercase; }
+.q-req { font-size: 10px; font-weight: 600; color: var(--red); background: rgba(217,79,79,.08); border-radius: 4px; padding: 2px 7px; }
+.q-opt-tag { font-size: 10px; color: var(--ink-soft); background: var(--bg); border-radius: 4px; padding: 2px 7px; }
+.q-title { font-size: 15px; font-weight: 600; line-height: 1.65; color: var(--ink); margin-bottom: 6px; }
+.q-hint { font-size: 12px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 14px; font-style: italic; }
+.err-msg { font-size: 12px; color: var(--red); margin-top: 8px; display: none; }
+.q-card.err .err-msg { display: block; }
+
+/* ════════════════════════════════════════
+   CHOICE ROWS
+════════════════════════════════════════ */
+.choices { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.choice-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer; user-select: none;
+  transition: border-color .15s, background .15s, box-shadow .15s;
+  background: #FAFAFA;
+}
+.choice-row:hover { border-color: #B0B0C8; background: var(--white); box-shadow: 0 1px 6px rgba(0,0,0,.06); }
+.choice-row.sel { border-color: var(--accent, var(--s1)); background: var(--white); box-shadow: 0 1px 8px rgba(0,0,0,.07); }
+
+.ctrl {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid #CCCCDC; flex-shrink: 0;
+  position: relative; transition: all .15s; background: var(--white);
+}
+.ctrl::after {
+  content: ''; position: absolute; inset: 4px;
+  background: var(--white); border-radius: 50%;
+  opacity: 0; transition: opacity .15s;
+}
+.choice-row.sel .ctrl { border-color: var(--accent, var(--s1)); background: var(--accent, var(--s1)); }
+.choice-row.sel .ctrl::after { opacity: 1; }
+
+.ctrl.chk { border-radius: 5px; }
+.ctrl.chk::after {
+  content: ''; inset: unset;
+  position: absolute; top: 2px; left: 5px;
+  width: 6px; height: 10px;
+  border: 2px solid var(--white);
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+  background: transparent; opacity: 0;
+}
+.choice-row.sel .ctrl.chk::after { opacity: 1; }
+
+.choice-text { font-size: 14px; color: var(--ink-mid); line-height: 1.45; flex: 1; }
+.choice-row.sel .choice-text { color: var(--ink); font-weight: 500; }
+
+.a1 .choice-row.sel { --accent: var(--s1); }
+.a2 .choice-row.sel { --accent: var(--s2); }
+.a3 .choice-row.sel { --accent: var(--s3); }
+.a4 .choice-row.sel { --accent: var(--s4); }
+.a5 .choice-row.sel { --accent: var(--s5); }
+
+.other-wrap { display: none; padding: 6px 0 2px 34px; }
+.other-wrap.open { display: block; }
+.other-input {
+  width: 100%; padding: 9px 12px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Noto Sans TC', sans-serif; font-size: 13px; color: var(--ink);
+  outline: none; background: var(--white); transition: border-color .15s;
+}
+.other-input:focus { border-color: var(--s1); }
+
+/* ════════════════════════════════════════
+   SCALE
+════════════════════════════════════════ */
+.scale-wrap { margin-top: 14px; }
+.scale-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-soft); margin-bottom: 8px; }
+.scale-btns { display: flex; gap: 7px; }
+.scale-btn {
+  flex: 1; padding: 14px 0;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  background: #FAFAFA; font-family: 'Noto Sans TC', sans-serif;
+  font-size: 17px; font-weight: 700; color: var(--ink-soft);
+  cursor: pointer; transition: all .15s; text-align: center;
+}
+.scale-btn:hover { border-color: #B0B0C8; background: var(--white); color: var(--ink); }
+.scale-btn.sel { background: var(--scale-color, var(--s1)); border-color: var(--scale-color, var(--s1)); color: #FFFFFF; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+.q-card.a1 .scale-btn.sel { --scale-color: var(--s1); }
+.q-card.a2 .scale-btn.sel { --scale-color: var(--s2); }
+.q-card.a3 .scale-btn.sel { --scale-color: var(--s3); }
+.q-card.a4 .scale-btn.sel { --scale-color: var(--s4); }
+.q-card.a5 .scale-btn.sel { --scale-color: var(--s5); }
+
+/* ════════════════════════════════════════
+   PRICE GRID
+════════════════════════════════════════ */
+.price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-top: 14px; }
+.price-card {
+  padding: 20px 12px 16px; text-align: center;
+  border: 1.5px solid var(--border); border-radius: 12px;
+  cursor: pointer; transition: all .15s; background: #FAFAFA; position: relative;
+}
+.price-card:hover { border-color: #B0B0C8; background: var(--white); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.08); }
+.price-card.sel { border-color: var(--s4); background: var(--white); box-shadow: 0 4px 14px rgba(181,137,62,.18); }
+.price-card.sel::before { content: ''; position: absolute; inset: 0; border-radius: 11px; background: rgba(181,137,62,.05); }
+.price-card.sel::after { content: '✓'; position: absolute; top: 8px; right: 10px; font-size: 11px; font-weight: 700; color: var(--s4); }
+.price-amt { display: block; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.price-card.sel .price-amt { color: var(--s4); }
+.price-sub { font-size: 11px; color: var(--ink-soft); line-height: 1.4; }
+
+/* ════════════════════════════════════════
+   TEXTAREA / INPUT
+════════════════════════════════════════ */
+.q-textarea {
+  width: 100%; margin-top: 14px;
+  padding: 13px 15px; min-height: 90px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-family: 'Noto Sans TC', sans-serif; font-size: 14px; color: var(--ink);
+  background: #FAFAFA; resize: vertical; outline: none;
+  transition: border-color .15s, background .15s; line-height: 1.7;
+}
+.q-textarea:focus { border-color: var(--s1); background: var(--white); }
+.q-input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-family: 'Noto Sans TC', sans-serif; font-size: 14px; color: var(--ink);
+  background: #FAFAFA; outline: none;
+  transition: border-color .15s, background .15s;
+}
+.q-input:focus { border-color: var(--s1); background: var(--white); }
+.input-pair { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+
+/* ════════════════════════════════════════
+   INTRO BOX
+════════════════════════════════════════ */
+.intro-box {
+  background: var(--s3pale); border: 1px solid #C0D8EE;
+  border-left: 4px solid var(--s3);
+  border-radius: 10px; padding: 18px 22px;
+  font-size: 14px; line-height: 1.85; color: var(--ink-mid); margin-bottom: 20px;
+}
+.intro-box strong { color: var(--s3b); }
+
+/* ════════════════════════════════════════
+   SKIP MESSAGE
+════════════════════════════════════════ */
+.skip-msg {
+  display: none;
+  background: linear-gradient(135deg, var(--s1pale), var(--white));
+  border: 1px solid #A8D5C5; border-left: 4px solid var(--s1);
+  border-radius: 14px; padding: 24px 28px; margin-bottom: 24px;
+}
+.skip-msg.show { display: block; }
+.skip-msg-title { font-size: 16px; font-weight: 700; color: var(--s1b); margin-bottom: 6px; }
+.skip-msg-body { font-size: 14px; color: var(--ink-mid); line-height: 1.8; }
+
+/* ════════════════════════════════════════
+   PRIVACY
+════════════════════════════════════════ */
+.privacy-box {
+  background: var(--white); border: 1px solid var(--border);
+  border-top: 4px solid var(--ink);
+  border-radius: var(--radius-card);
+  padding: 28px 28px 24px; margin-bottom: 16px;
+  box-shadow: var(--shadow-card);
+}
+.privacy-hl {
+  font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.privacy-hl::before { content: ''; display: block; width: 4px; height: 16px; background: var(--ink); border-radius: 2px; flex-shrink: 0; }
+.privacy-body { font-size: 12.5px; color: var(--ink-mid); line-height: 1.9; }
+.privacy-body p { margin-bottom: 6px; }
+.privacy-agree { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; cursor: pointer; }
+.privacy-agree input[type=checkbox] { width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; accent-color: var(--ink); cursor: pointer; }
+.privacy-agree-text { font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+.privacy-agree-text strong { color: var(--ink); }
+
+/* ════════════════════════════════════════
+   SUBMIT
+════════════════════════════════════════ */
+.submit-area { text-align: center; padding: 8px 0 40px; }
+.submit-note { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.7; }
+.btn-submit {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--ink); color: #FFFFFF;
+  border: none; border-radius: 50px;
+  padding: 18px 52px; font-family: 'Noto Sans TC', sans-serif;
+  font-size: 16px; font-weight: 600; cursor: pointer; letter-spacing: .02em;
+  transition: background .2s, transform .15s, box-shadow .15s;
+  box-shadow: 0 4px 20px rgba(26,26,46,.25);
+}
+.btn-submit:hover { background: #2C2C4E; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,26,46,.35); }
+.btn-submit:disabled { background: #AAAABB; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-submit svg { transition: transform .2s; }
+.btn-submit:hover svg { transform: translateX(3px); }
+.submit-err { font-size: 13px; color: var(--red); margin-top: 12px; display: none; }
+
+/* ════════════════════════════════════════
+   THANK YOU
+════════════════════════════════════════ */
+.thankyou { display: none; max-width: 640px; margin: 60px auto; padding: 0 20px 80px; }
+.ty-card { background: var(--white); border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-card); padding: 52px 44px; text-align: center; }
+.ty-icon { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--s1), var(--s1b)); margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; animation: popIn .4s cubic-bezier(.34,1.56,.64,1); }
+.ty-icon svg { width: 32px; height: 32px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+@keyframes popIn { 0%{transform:scale(.4);opacity:0} 100%{transform:scale(1);opacity:1} }
+.ty-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.ty-sub { font-size: 14px; line-height: 1.85; color: var(--ink-mid); margin-bottom: 32px; }
+.offer-card { background: linear-gradient(135deg, var(--s1pale) 0%, var(--white) 100%); border: 1px solid #A8D5C5; border-radius: 14px; padding: 28px 32px; text-align: left; margin-bottom: 28px; }
+.offer-hl { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--s1b); margin-bottom: 18px; line-height: 1.4; }
+.offer-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink-mid); line-height: 1.6; margin-bottom: 10px; }
+.offer-bullet { width: 20px; height: 20px; border-radius: 50%; background: var(--s1b); flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+.offer-bullet svg { width: 11px; height: 11px; stroke: white; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.btn-cta { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--s1) 0%, var(--s1b) 100%); color: #FFFFFF; border: none; border-radius: 50px; padding: 16px 40px; font-family: 'Noto Sans TC', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; text-decoration: none; box-shadow: 0 4px 16px rgba(77,140,120,.35); transition: transform .15s, box-shadow .15s; }
+.btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(77,140,120,.45); }
+
+.sec-block { margin-bottom: 48px; }
+
+@media (max-width: 600px) {
+  .hero { padding: 60px 20px 72px; }
+  .form-wrap { padding: 32px 16px 60px; }
+  .sec-header { padding: 28px 28px 24px; }
+  .sec-bg-num { font-size: 100px; }
+  .q-card { padding: 22px 18px 18px; }
+  .price-grid { grid-template-columns: 1fr 1fr; }
+  .scale-btns { gap: 4px; }
+  .scale-btn { font-size: 14px; padding: 11px 0; }
+  .progress-shell { display: none; }
+  .ty-card { padding: 40px 24px; }
+  .offer-card { padding: 22px 20px; }
+  .site-nav { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════ -->
+<nav class="site-nav">
+  <div class="nav-left">
+    <!--
+      LOGO 使用方式：
+      1. 將富玩家 logo 圖檔（建議 PNG 透明背景）放入 public/ 資料夾，命名為 fuplayer-logo.png
+      2. 移除下方 nav-logo-txt，改用：
+         <img src="./fuplayer-logo.png" alt="富玩家" class="nav-logo-img">
+    -->
+    <span class="nav-logo-txt">富玩家</span>
+  </div>
+  <div class="nav-right">今周學堂 × 星芽社企</div>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════ -->
+<header class="hero">
+  <div class="hero-label">富玩家召喚</div>
+  <h1>你準備好迎接<br><em>百歲人生新職涯</em>了嗎？</h1>
+  <p class="hero-desc">AI 正在重塑職場、台灣已進入超高齡社會。<br>每一位思考「下一步怎麼走」的資深職場人，<br>都值得<br>一份認真的準備。</p>
+  <div class="hero-pill">填完問卷立即獲得一份《<strong>百歲人生新職涯檢測建議報告</strong>》<br>同時有機會啟動新職涯媒合機會</div>
+</header>
+
+<!-- ══ PROGRESS ══════════════════════════ -->
+<div class="progress-shell">
+  <div class="progress-steps" id="pSteps">
+    <div class="p-step active"></div>
+    <div class="p-step"></div>
+    <div class="p-step"></div>
+    <div class="p-step"></div>
+    <div class="p-step"></div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-pct" id="progressPct">0%</div>
+</div>
+
+<!-- ══ FORM ══════════════════════════════ -->
+<div class="form-wrap" id="formWrap">
+<form id="surveyForm">
+
+<!-- ═══ SECTION 1 ═══════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header s1">
+    <div class="sec-eyebrow">第一部分 · 1 of 5</div>
+    <h2>關於你現在的職涯狀態</h2>
+    <p class="sec-desc">讓我們先了解你目前的處境，這些題目沒有標準答案，只有最真實的你。</p>
+    <span class="sec-bg-num">01</span>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card a1" id="q1">
+    <div class="q-header"><span class="q-tag">Q1</span><span class="q-req">必填</span></div>
+    <div class="q-title">你目前的年齡區間？</div>
+    <div class="choices" data-type="single" data-name="q1">
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">35–39 歲</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">40–44 歲</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">45–49 歲</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">50–54 歲</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">55–59 歲</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">60 歲以上</span></label>
+    </div>
+    <div class="err-msg">請選擇一個選項</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card a1" id="q2">
+    <div class="q-header"><span class="q-tag">Q2</span><span class="q-req">必填</span></div>
+    <div class="q-title">你目前的職涯身份是？<small style="font-weight:400;color:var(--ink-soft)">（可複選）</small></div>
+    <div class="choices" data-type="multi" data-name="q2">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">企業全職員工（主管職）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">企業全職員工（非主管職）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">兼職多元斜槓者</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">自由工作者 / 接案者</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">創業中 / 個人事業主</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">正在轉職或職涯空窗中</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">退休或半退休</span></label>
+    </div>
+    <div class="err-msg">請至少選擇一個選項</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card a1" id="q3">
+    <div class="q-header"><span class="q-tag">Q3</span><span class="q-req">必填</span></div>
+    <div class="q-title">你的主要專業領域是？<small style="font-weight:400;color:var(--ink-soft)">（最多選 2 項）</small></div>
+    <div class="choices" data-type="multi" data-max="2" data-name="q3">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">科技 / 半導體 / 電子製造</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">金融 / 保險 / 投資理財</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">行銷 / 品牌 / 公關 / 業務 / 媒體</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">人力資源 / 組織管理</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">製造 / 供應鏈 / 品保</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">醫療 / 健康照護</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">教育 / 顧問 / 培訓</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">法律 / 會計 / 財稅</span></label>
+      <label class="choice-row other-trigger" data-other="q3ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q3ow"><input class="other-input" id="q3oi" placeholder="請填寫你的專業領域…" type="text"></div>
+    <div class="err-msg">請至少選擇一個選項（最多 2 項）</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card a1" id="q4">
+    <div class="q-header"><span class="q-tag">Q4</span><span class="q-req">必填</span></div>
+    <div class="q-title">你在目前主要領域累積的工作年資大約？</div>
+    <div class="choices" data-type="single" data-name="q4">
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">5 年以下</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">5–9 年</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">10–14 年</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">15–19 年</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">20 年以上</span></label>
+    </div>
+    <div class="err-msg">請選擇一個選項</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 2 ═══════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header s2">
+    <div class="sec-eyebrow">第二部分 · 2 of 5</div>
+    <h2>面對時代浪潮，你感受到了什麼？</h2>
+    <p class="sec-desc">AI 快速發展、台灣邁入超高齡社會——這些不只是新聞，是每個職場人即將面對的現實。</p>
+    <span class="sec-bg-num">02</span>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card a2" id="q5">
+    <div class="q-header"><span class="q-tag">Q5</span><span class="q-req">必填</span></div>
+    <div class="q-title">你有多強烈地感受到 AI 正在衝擊你的工作或產業？</div>
+    <div class="scale-wrap" data-name="q5">
+      <div class="scale-labels"><span>完全沒感覺</span><span>非常強烈</span></div>
+      <div class="scale-btns">
+        <button type="button" class="scale-btn" data-val="1">1</button>
+        <button type="button" class="scale-btn" data-val="2">2</button>
+        <button type="button" class="scale-btn" data-val="3">3</button>
+        <button type="button" class="scale-btn" data-val="4">4</button>
+        <button type="button" class="scale-btn" data-val="5">5</button>
+        <button type="button" class="scale-btn" data-val="6">6</button>
+      </div>
+    </div>
+    <div class="err-msg">請選擇一個分數</div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card a2" id="q6">
+    <div class="q-header"><span class="q-tag">Q6</span><span class="q-req">必填</span></div>
+    <div class="q-title">關於「百歲人生新職涯」，哪一句話最貼近你現在的心情？</div>
+    <div class="choices" data-type="single" data-name="q6">
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">還好，我對現在的狀態滿意</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">有些焦慮，但還在觀望</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">已經感受到壓力，開始積極準備</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">非常焦慮，但不知道從哪裡開始</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">已經在行動中，尋找更好的突破口</span></label>
+      <label class="choice-row other-trigger" data-other="q6ow"><span class="ctrl"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q6ow"><input class="other-input" id="q6oi" placeholder="請填寫你的心情…" type="text"></div>
+    <div class="err-msg">請選擇一個選項</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card a2" id="q7">
+    <div class="q-header"><span class="q-tag">Q7</span><span class="q-req">必填</span></div>
+    <div class="q-title">說到百歲人生新職涯，你最擔心哪些事？<small style="font-weight:400;color:var(--ink-soft)">（可複選，最多 3 項）</small></div>
+    <div class="choices" data-type="multi" data-max="3" data-name="q7">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">被公司資遣或提早退休，收入來源中斷</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">退休金不夠，無法維持生活品質</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">AI 取代我的工作，專業優勢消失</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">年齡歧視，找不到願意雇用的公司</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">想創業或接案，但不知道如何開始</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">有專業能力，但不知道如何讓市場看見</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">缺乏數位技能，跟不上職場新需求</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">人脈圈子太窄，找不到合適的機會</span></label>
+      <label class="choice-row other-trigger" data-other="q7ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q7ow"><input class="other-input" id="q7oi" placeholder="請填寫你的擔憂…" type="text"></div>
+    <div class="err-msg">請至少選擇一個選項（最多 3 項）</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="q-card a2" id="q8">
+    <div class="q-header"><span class="q-tag">Q8</span><span class="q-opt-tag">選填</span></div>
+    <div class="q-title">為了因應職涯變化，你目前已經做了哪些事？<small style="font-weight:400;color:var(--ink-soft)">（可複選）</small></div>
+    <div class="choices" data-type="multi" data-name="q8">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">學習新技能（如 AI 工具、數位行銷等）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">建立個人品牌或社群媒體形象</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">開始接案或兼職</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">參加培訓課程或社群活動</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">累積存款或投資理財</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">尋找新的職缺或機會</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">還沒有採取任何具體行動</span></label>
+      <label class="choice-row other-trigger" data-other="q8ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q8ow"><input class="other-input" id="q8oi" placeholder="請填寫你已採取的行動…" type="text"></div>
+  </div>
+
+  <!-- Q9（移至第二部分，量表 0–5，0 = 跳題至 Q20） -->
+  <div class="q-card a2" id="q9">
+    <div class="q-header"><span class="q-tag">Q9</span><span class="q-req">必填</span></div>
+    <div class="q-title">你對「將自己的專業轉化為顧問服務、對外接案」這個方向有多大興趣？</div>
+    <div class="scale-wrap" data-name="q9" id="q9scale">
+      <div class="scale-labels"><span>0 完全沒興趣</span><span>5 非常有興趣</span></div>
+      <div class="scale-btns">
+        <button type="button" class="scale-btn" data-val="0">0</button>
+        <button type="button" class="scale-btn" data-val="1">1</button>
+        <button type="button" class="scale-btn" data-val="2">2</button>
+        <button type="button" class="scale-btn" data-val="3">3</button>
+        <button type="button" class="scale-btn" data-val="4">4</button>
+        <button type="button" class="scale-btn" data-val="5">5</button>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--ink-soft);margin-top:8px;line-height:1.6;">
+      選 <strong>0</strong> 表示完全沒興趣，將直接跳至聯絡資訊，同意個資聲明後完成問卷
+    </div>
+    <div class="err-msg">請選擇一個分數</div>
+  </div>
+</div>
+
+<!-- ═══ SECTIONS 3–5（Q9 = 0 時隱藏）══ -->
+<div id="skipSections">
+
+<!-- ═══ SECTION 3 ═══════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header s3">
+    <div class="sec-eyebrow">第三部分 · 3 of 5</div>
+    <h2>關於成為顧問這件事</h2>
+    <p class="sec-desc">越來越多資深工作者選擇以「顧問」方式延伸職涯價值。你的障礙在哪裡？</p>
+    <span class="sec-bg-num">03</span>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card a3" id="q10">
+    <div class="q-header"><span class="q-tag">Q10</span><span class="q-req">必填</span></div>
+    <div class="q-title">如果你考慮成為顧問，目前最大的障礙是什麼？<small style="font-weight:400;color:var(--ink-soft)">（可複選）</small></div>
+    <div class="choices" data-type="multi" data-name="q10">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">不知道自己的專業是否有市場價值</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">不知道如何開發客戶、找到第一個案子</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">不懂一人公司的財稅與合約架構</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">不知道如何定價和談判顧問費用</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">缺乏個人品牌，沒有知名度</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">不熟悉 AI 工具，怕效率跟不上</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">沒有足夠的人脈與業界連結</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">心理上還沒準備好脫離組織</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">目前還沒有考慮成為顧問</span></label>
+      <label class="choice-row other-trigger" data-other="q10ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q10ow"><input class="other-input" id="q10oi" placeholder="請填寫你的障礙…" type="text"></div>
+    <div class="err-msg">請至少選擇一個選項</div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card a3" id="q11">
+    <div class="q-header"><span class="q-tag">Q11</span><span class="q-opt-tag">選填</span></div>
+    <div class="q-title">如果你要提供顧問服務，你最希望在哪個領域發揮？</div>
+    <div class="q-hint">例如：供應鏈管理優化、中小企業人才招募、半導體客戶關係管理……</div>
+    <textarea class="q-textarea" data-name="q11" placeholder="請簡短描述你的專業領域與方向……" rows="3"></textarea>
+  </div>
+
+  <!-- Q12 -->
+  <div class="q-card a3" id="q12">
+    <div class="q-header"><span class="q-tag">Q12</span><span class="q-req">必填</span></div>
+    <div class="q-title">如果開始接顧問案，你每月願意投入的時間大約？</div>
+    <div class="choices" data-type="single" data-name="q12">
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">4 小時以內（非常輕量，試水溫）</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">4–8 小時（副業性質）</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">8–16 小時（正式斜槓）</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">16 小時以上（全力發展）</span></label>
+    </div>
+    <div class="err-msg">請選擇一個選項</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4 ═══════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header s4">
+    <div class="sec-eyebrow">第四部分 · 4 of 5</div>
+    <h2>你希望得到什麼樣的協助？</h2>
+    <p class="sec-desc">告訴我們你理想中的學習方式，我們用來設計最符合你需求的方案。</p>
+    <span class="sec-bg-num">04</span>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card a4" id="q13">
+    <div class="q-header"><span class="q-tag">Q13</span><span class="q-req">必填</span></div>
+    <div class="q-title">你最希望得到哪些方面的協助？<small style="font-weight:400;color:var(--ink-soft)">（可複選，最多 4 項）</small></div>
+    <div class="choices" data-type="multi" data-max="4" data-name="q13">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">找出自己的顧問利基與市場定位</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">學習顧問提案與客戶溝通技巧</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">掌握一人公司財稅與法律基礎</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">建立個人品牌與數位形象</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">學習 AI 工具提升顧問工作效率</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">實際練習接案，取得真實案例</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">連結同齡志同道合的夥伴社群</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">媒合企業客戶，直接創造收入機會</span></label>
+      <label class="choice-row other-trigger" data-other="q13ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q13ow"><input class="other-input" id="q13oi" placeholder="請填寫你希望得到的協助…" type="text"></div>
+    <div class="err-msg">請至少選擇一個選項（最多 4 項）</div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="q-card a4" id="q14">
+    <div class="q-header"><span class="q-tag">Q14</span><span class="q-req">必填</span></div>
+    <div class="q-title">你偏好哪種學習與參與形式？<small style="font-weight:400;color:var(--ink-soft)">（可複選）</small></div>
+    <div class="choices" data-type="multi" data-name="q14">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">密集工作坊（2–3 天線下集中）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">週末半日小班課（每月 1–2 次）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">線上直播課（彈性時間）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">線上自學影音課程（自行安排進度）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">私密社群＋定期線下媒合聚會</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">一對一個人諮詢 / 輔導</span></label>
+      <label class="choice-row other-trigger" data-other="q14ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q14ow"><input class="other-input" id="q14oi" placeholder="請填寫你偏好的參與形式…" type="text"></div>
+    <div class="err-msg">請至少選擇一個選項</div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card a4" id="q15">
+    <div class="q-header"><span class="q-tag">Q15</span><span class="q-req">必填</span></div>
+    <div class="q-title">如果有一個為期週末 2–3 天的實戰型「顧問轉型工作坊」，你願意投資的價格範圍？</div>
+    <div class="price-grid" data-name="q15">
+      <div class="price-card" data-val="NT$10,000以下"><span class="price-amt">$10,000</span><span class="price-sub">以下</span></div>
+      <div class="price-card" data-val="NT$10,000–19,999"><span class="price-amt">$1–2 萬</span><span class="price-sub">NT$10,000–19,999</span></div>
+      <div class="price-card" data-val="NT$20,000–29,999"><span class="price-amt">$2–3 萬</span><span class="price-sub">NT$20,000–29,999</span></div>
+      <div class="price-card" data-val="NT$30,000–39,999"><span class="price-amt">$3–4 萬</span><span class="price-sub">NT$30,000–39,999</span></div>
+      <div class="price-card" data-val="NT$40,000以上"><span class="price-amt">$40,000+</span><span class="price-sub">內容夠扎實就值得</span></div>
+    </div>
+    <div class="err-msg">請選擇一個價格區間</div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card a4" id="q16">
+    <div class="q-header"><span class="q-tag">Q16</span><span class="q-req">必填</span></div>
+    <div class="q-title">你最在乎什麼，才會決定參加這樣的課程？<small style="font-weight:400;color:var(--ink-soft)">（可複選，最多 3 項）</small></div>
+    <div class="choices" data-type="multi" data-max="3" data-name="q16">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">課程後有真實的接案機會或媒合</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">有實際操作演練，不只是聽講</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">講師有真實顧問接案實績</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">品牌可信度（今周刊 / 今周學堂）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">同學的品質（同齡資深工作者）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">可取得顧問資歷 / 結業證書</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">課程費用合理</span></label>
+      <label class="choice-row other-trigger" data-other="q16ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q16ow"><input class="other-input" id="q16oi" placeholder="請填寫你的決策關鍵…" type="text"></div>
+    <div class="err-msg">請至少選擇一個選項（最多 3 項）</div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5 ═══════════════════════ -->
+<div class="sec-block">
+  <div class="sec-header s5">
+    <div class="sec-eyebrow">第五部分 · 5 of 5</div>
+    <h2>關於「富玩家顧問實踐營」</h2>
+    <p class="sec-desc">了解我們為你設計的轉型方案，讓你的下一步有更清楚的方向。</p>
+    <span class="sec-bg-num">05</span>
+  </div>
+
+  <div class="intro-box">
+    今周學堂將於 <strong>2026 年 5 月</strong> 舉辦首梯「富玩家顧問實踐營」——這是一個<strong>週末 2–3 天的實戰工作坊</strong>，你將與 6 位真實顧問師資一起，從自我探索、顧問思維、個人品牌到 AI 工具，完整走過顧問轉型的每個關鍵環節，最後在 <strong>Demo Day</strong> 向真實的企業 / NPO 客戶提案，並有機會取得委任合約，正式列入你的職涯履歷。
+  </div>
+
+  <!-- Q17 -->
+  <div class="q-card a5" id="q17">
+    <div class="q-header"><span class="q-tag">Q17</span><span class="q-req">必填</span></div>
+    <div class="q-title">看到以上介紹，你的第一反應是？</div>
+    <div class="choices" data-type="single" data-name="q17">
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">非常有興趣，想立刻了解更多</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">有興趣，但還需要更多資訊</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">有點興趣，但時間 / 費用需要考慮</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">目前不適合，但未來可能</span></label>
+      <label class="choice-row"><span class="ctrl"></span><span class="choice-text">這不是我目前需要的</span></label>
+      <label class="choice-row other-trigger" data-other="q17ow"><span class="ctrl"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q17ow"><input class="other-input" id="q17oi" placeholder="請填寫你的第一反應…" type="text"></div>
+    <div class="err-msg">請選擇一個選項</div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card a5" id="q18">
+    <div class="q-header"><span class="q-tag">Q18</span><span class="q-opt-tag">選填</span></div>
+    <div class="q-title">「富玩家顧問實踐營」最吸引你的環節是？<small style="font-weight:400;color:var(--ink-soft)">（可複選）</small></div>
+    <div class="choices" data-type="multi" data-name="q18">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">個人品牌探索工作坊（找到你的獨特定位）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">顧問思維與客戶溝通技巧</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">一人公司財稅基礎（避免接案踩雷）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">AI 工具打造個人員工</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">Demo Day 真實提案與媒合機會</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">可列入履歷的顧問委任書</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">結業後的持續媒合支援</span></label>
+      <label class="choice-row other-trigger" data-other="q18ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q18ow"><input class="other-input" id="q18oi" placeholder="請填寫最吸引你的環節…" type="text"></div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card a5" id="q19">
+    <div class="q-header"><span class="q-tag">Q19</span><span class="q-opt-tag">選填</span></div>
+    <div class="q-title">關於「顧問職涯轉型」，你還有什麼問題或想法想告訴我們？</div>
+    <div class="q-hint">你的每一則回覆我們都會認真閱讀，也可能成為我們下一期內容的靈感來源。</div>
+    <textarea class="q-textarea" data-name="q19" placeholder="在這裡自由分享……" rows="4"></textarea>
+  </div>
+</div>
+
+</div><!-- /skipSections -->
+
+<!-- 跳題提示（Q9=0 時顯示） -->
+<div class="skip-msg" id="skipMsg">
+  <div class="skip-msg-title">感謝你的誠實回答！</div>
+  <div class="skip-msg-body">由於你目前暫無顧問轉型興趣，接下來只需填寫聯絡資訊，即可取得《百歲人生新職涯檢測建議報告》。</div>
+</div>
+
+<!-- ══ Q20–21（必填，永遠顯示） ════════ -->
+<div class="sec-block" style="margin-bottom:24px;">
+  <div class="q-card a1" id="q20card">
+    <div class="q-header"><span class="q-tag">Q20–21</span><span class="q-req">必填</span></div>
+    <div class="q-title">留下你的聯絡資訊，用於發送《百歲人生新職涯檢測建議報告》。</div>
+    <div class="input-pair">
+      <input class="q-input" id="q20input" data-name="q20" placeholder="你的姓名" type="text">
+      <input class="q-input" id="q21input" data-name="q21" placeholder="Email" type="email">
+    </div>
+    <div class="err-msg" id="q2021err">請填寫姓名與 Email</div>
+  </div>
+</div>
+
+<!-- ══ 個資聲明 ══════════════════════════ -->
+<div class="privacy-box">
+  <div class="privacy-hl">個人資料保護聲明</div>
+  <div class="privacy-body">
+    <p>依據中華民國《個人資料保護法》，本問卷蒐集之個人資料（包含姓名、電子郵件地址及問卷填答內容），其蒐集目的及利用如下：</p>
+    <p><strong>一、蒐集機關：</strong>今周行銷股份有限公司（以下簡稱本公司）。</p>
+    <p><strong>二、蒐集目的：</strong>市場調查與研究分析（個資法特定目的第 157 類）；發送課程活動優惠資訊（第 040 類）；富玩家顧問實踐營課程招生聯繫。整體數據分析結果僅做行銷及業務推廣使用；不得曝光任何個人資訊。</p>
+    <p><strong>三、利用期間、地區與對象：</strong>本公司於台灣地區，在上述目的存續期間內使用，不提供予任何第三方機構或廠商。</p>
+    <p><strong>四、您的權利：</strong>您得依《個資法》第 3 條，向本公司請求查詢、閱覽、複製、補充、更正、停止蒐集或刪除您的個人資料。如需行使上述權利，請聯繫今周學堂 Line 客服：<a href="https://lin.ee/3hXc0R8" target="_blank" style="color:var(--s3)">https://lin.ee/3hXc0R8</a></p>
+  </div>
+  <label class="privacy-agree">
+    <input type="checkbox" id="privacyChk" onchange="updateSubmitBtn()">
+    <span class="privacy-agree-text">我已閱讀並了解上述<strong>個人資料保護聲明</strong>，同意今周行銷股份有限公司依上述目的蒐集、處理及利用我的個人資料。</span>
+  </label>
+</div>
+
+<!-- ══ SUBMIT ══════════════════════════ -->
+<div class="submit-area">
+  <p class="submit-note">填完即可取得《百歲人生新職涯檢測建議報告》<br>感謝撥冗填答。</p>
+  <button type="submit" class="btn-submit" id="submitBtn" disabled>
+    <span>請先勾選個資聲明再送出</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </button>
+  <div class="submit-err" id="submitErr"></div>
+</div>
+
+</form>
+</div>
+
+<!-- ══ THANK YOU ══════════════════════ -->
+<div id="thankyou" class="thankyou">
+  <div class="ty-card">
+    <div class="ty-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div class="ty-title">感謝你完成填答！</div>
+    <p class="ty-sub">你的回答對我們非常珍貴。<br>我們將盡快將《百歲人生新職涯檢測建議報告》發送至你的 Email，請留意收件匣。</p>
+    <div class="offer-card">
+      <div class="offer-hl">同時啟動你的新職涯媒合機會</div>
+      <div class="offer-item">
+        <span class="offer-bullet"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        優先取得 Demo Day 媒合名額（向真實企業 / NPO 提案機會）
+      </div>
+      <div class="offer-item">
+        <span class="offer-bullet"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        隨班附贈《個人顧問品牌診斷報告》1 份（1 對 1 解讀）
+      </div>
+      <div class="offer-item">
+        <span class="offer-bullet"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        早鳥報名享折扣優惠，限額限時
+      </div>
+      <div class="offer-item">
+        <span class="offer-bullet"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        結業後 6 個月免費進入富玩家私域社群持續媒合
+      </div>
+    </div>
+    <a class="btn-cta" href="#" onclick="alert('請替換為正式報名頁連結');return false;">
+      了解富玩家顧問實踐營
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════
+let q9Skipped = false; // true when Q9 = 0
+
+// Required questions when Q9 is NOT 0
+const REQUIRED_FULL = ['q1','q2','q3','q4','q5','q6','q7','q9','q10','q12','q13','q14','q15','q16','q17'];
+// Required questions when Q9 = 0 (skip sections 3-5)
+const REQUIRED_SKIP = ['q1','q2','q3','q4','q5','q6','q7','q9'];
+
+function getRequiredQs() {
+  return q9Skipped ? REQUIRED_SKIP : REQUIRED_FULL;
+}
+
+// ════════════════════════════════════════
+//  CHOICES INTERACTION
+// ════════════════════════════════════════
+document.querySelectorAll('.choices').forEach(group => {
+  const type = group.dataset.type;
+  const maxSel = group.dataset.max ? +group.dataset.max : null;
+
+  group.querySelectorAll('.choice-row').forEach(row => {
+    row.addEventListener('click', () => {
+      const isOther = row.classList.contains('other-trigger');
+      const otherId = isOther ? row.dataset.other : null;
+      const otherWrap = otherId ? document.getElementById(otherId) : null;
+
+      if (type === 'single') {
+        group.querySelectorAll('.choice-row').forEach(r => r.classList.remove('sel'));
+        group.querySelectorAll('.other-trigger').forEach(ot => {
+          const ow = document.getElementById(ot.dataset.other);
+          if (ow) ow.classList.remove('open');
+        });
+        row.classList.add('sel');
+        if (isOther && otherWrap) otherWrap.classList.add('open');
+      } else {
+        if (row.classList.contains('sel')) {
+          row.classList.remove('sel');
+          if (isOther && otherWrap) otherWrap.classList.remove('open');
+        } else {
+          const selCount = group.querySelectorAll('.choice-row.sel').length;
+          if (maxSel && selCount >= maxSel) return;
+          row.classList.add('sel');
+          if (isOther && otherWrap) otherWrap.classList.add('open');
+        }
+      }
+
+      const card = group.closest('.q-card');
+      if (card) { card.classList.add('answered'); card.classList.remove('err'); }
+      updateProgress();
+    });
+  });
+});
+
+// ════════════════════════════════════════
+//  SCALE BUTTONS
+// ════════════════════════════════════════
+document.querySelectorAll('.scale-wrap').forEach(wrap => {
+  wrap.querySelectorAll('.scale-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      wrap.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      const card = wrap.closest('.q-card');
+      if (card) { card.classList.add('answered'); card.classList.remove('err'); }
+
+      // Q9 skip logic
+      if (wrap.id === 'q9scale') {
+        const val = btn.dataset.val;
+        if (val === '0') {
+          q9Skipped = true;
+          // 隱藏 section 3–5
+          const skip = document.getElementById('skipSections');
+          skip.style.display = 'none';
+          document.getElementById('skipMsg').classList.add('show');
+          // 平滑跳到 Q20 聯絡資訊
+          setTimeout(() => {
+            document.getElementById('q20card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 150);
+        } else {
+          q9Skipped = false;
+          document.getElementById('skipSections').style.display = 'block';
+          document.getElementById('skipMsg').classList.remove('show');
+        }
+      }
+
+      updateProgress();
+    });
+  });
+});
+
+// ════════════════════════════════════════
+//  PRICE CARDS
+// ════════════════════════════════════════
+document.querySelectorAll('.price-grid').forEach(grid => {
+  grid.querySelectorAll('.price-card').forEach(card => {
+    card.addEventListener('click', () => {
+      grid.querySelectorAll('.price-card').forEach(c => c.classList.remove('sel'));
+      card.classList.add('sel');
+      const qCard = grid.closest('.q-card');
+      if (qCard) { qCard.classList.add('answered'); qCard.classList.remove('err'); }
+      updateProgress();
+    });
+  });
+});
+
+// ════════════════════════════════════════
+//  Q20/Q21 INPUT (mark answered on change)
+// ════════════════════════════════════════
+['q20input','q21input'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('input', () => {
+      const card = document.getElementById('q20card');
+      const name = el.value.trim();
+      const email = document.getElementById('q21input')?.value.trim();
+      if (name && email) {
+        card?.classList.add('answered');
+        card?.classList.remove('err');
+      }
+      updateProgress();
+    });
+  }
+});
+
+// ════════════════════════════════════════
+//  PROGRESS
+// ════════════════════════════════════════
+function isAnswered(id) {
+  if (id === 'q20' || id === 'q21') {
+    return !!(document.getElementById('q20input')?.value.trim() && document.getElementById('q21input')?.value.trim());
+  }
+  const card = document.getElementById(id);
+  return card && card.classList.contains('answered');
+}
+
+function updateProgress() {
+  const req = getRequiredQs();
+  const contactDone = !!(document.getElementById('q20input')?.value.trim() && document.getElementById('q21input')?.value.trim());
+  const qDone = req.filter(id => isAnswered(id) || (id === 'q9' && document.querySelector('#q9 .scale-btn.sel'))).length;
+  const total = req.length + 2; // +2 for q20, q21
+  const done = qDone + (contactDone ? 2 : 0);
+  const pct = Math.round(done / total * 100);
+
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+
+  const steps = document.querySelectorAll('.p-step');
+  const secRanges = [
+    ['q1','q2','q3','q4'],['q5','q6','q7','q8','q9'],['q10','q11','q12'],['q13','q14','q15','q16'],['q17','q18','q19']
+  ];
+  secRanges.forEach((range, i) => {
+    const reqInSec = range.filter(r => req.includes(r));
+    const allDone = reqInSec.length > 0 && reqInSec.every(id => isAnswered(id));
+    const anyDone = range.some(id => isAnswered(id));
+    if (allDone) { steps[i].classList.remove('active'); steps[i].classList.add('done'); }
+    else if (anyDone) { steps[i].classList.add('active'); steps[i].classList.remove('done'); }
+    else { steps[i].classList.remove('active','done'); }
+  });
+}
+
+// ════════════════════════════════════════
+//  SUBMIT BUTTON STATE
+// ════════════════════════════════════════
+function updateSubmitBtn() {
+  const btn = document.getElementById('submitBtn');
+  const chk = document.getElementById('privacyChk');
+  if (chk.checked) {
+    btn.disabled = false;
+    btn.querySelector('span').textContent = '送出問卷';
+  } else {
+    btn.disabled = true;
+    btn.querySelector('span').textContent = '請先勾選個資聲明再送出';
+  }
+}
+
+// ════════════════════════════════════════
+//  DATA COLLECTION
+// ════════════════════════════════════════
+function collectData() {
+  const data = {};
+
+  document.querySelectorAll('.choices').forEach(group => {
+    const name = group.dataset.name;
+    const type = group.dataset.type;
+    if (!name) return;
+    if (type === 'single') {
+      const sel = group.querySelector('.choice-row.sel');
+      if (sel) {
+        const isOther = sel.classList.contains('other-trigger');
+        data[name] = isOther
+          ? (document.getElementById(name+'oi')?.value.trim() || sel.querySelector('.choice-text').textContent.trim())
+          : sel.querySelector('.choice-text').textContent.trim();
+      }
+    } else {
+      const vals = [];
+      group.querySelectorAll('.choice-row.sel').forEach(sel => {
+        const isOther = sel.classList.contains('other-trigger');
+        vals.push(isOther
+          ? (document.getElementById(name+'oi')?.value.trim() || sel.querySelector('.choice-text').textContent.trim())
+          : sel.querySelector('.choice-text').textContent.trim()
+        );
+      });
+      if (vals.length) data[name] = vals;
+    }
+  });
+
+  document.querySelectorAll('.scale-wrap').forEach(wrap => {
+    const name = wrap.dataset.name;
+    if (!name) return;
+    const sel = wrap.querySelector('.scale-btn.sel');
+    if (sel) data[name] = sel.dataset.val;
+  });
+
+  document.querySelectorAll('.price-grid').forEach(grid => {
+    const name = grid.dataset.name;
+    if (!name) return;
+    const sel = grid.querySelector('.price-card.sel');
+    if (sel) data[name] = sel.dataset.val;
+  });
+
+  document.querySelectorAll('textarea[data-name]').forEach(ta => {
+    const v = ta.value.trim();
+    if (v) data[ta.dataset.name] = v;
+  });
+
+  const name = document.getElementById('q20input')?.value.trim();
+  const email = document.getElementById('q21input')?.value.trim();
+  if (name) data.q20 = name;
+  if (email) data.q21 = email;
+
+  return data;
+}
+
+// ════════════════════════════════════════
+//  VALIDATION
+// ════════════════════════════════════════
+function validate() {
+  let firstErrEl = null;
+  let ok = true;
+
+  // Required choice/scale questions
+  getRequiredQs().forEach(id => {
+    const card = document.getElementById(id);
+    if (!card) return;
+    if (!card.classList.contains('answered')) {
+      card.classList.add('err');
+      if (!firstErrEl) firstErrEl = card;
+      ok = false;
+    }
+  });
+
+  // Q20/Q21 required
+  const nameVal = document.getElementById('q20input')?.value.trim();
+  const emailVal = document.getElementById('q21input')?.value.trim();
+  const q20card = document.getElementById('q20card');
+  if (!nameVal || !emailVal) {
+    if (q20card) q20card.classList.add('err');
+    document.getElementById('q2021err').style.display = 'block';
+    if (!firstErrEl) firstErrEl = q20card;
+    ok = false;
+  } else {
+    if (q20card) q20card.classList.remove('err');
+    document.getElementById('q2021err').style.display = 'none';
+  }
+
+  if (firstErrEl) firstErrEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  return ok;
+}
+
+// ════════════════════════════════════════
+//  FORM SUBMIT
+// ════════════════════════════════════════
+document.getElementById('surveyForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const errDiv = document.getElementById('submitErr');
+  errDiv.style.display = 'none';
+
+  if (!validate()) {
+    errDiv.textContent = '有必填題目尚未回答，請向上確認。';
+    errDiv.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.querySelector('span').textContent = '送出中…';
+
+  try {
+    const res = await fetch('/api/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(collectData())
+    });
+    const json = await res.json();
+    if (json.ok) {
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('thankyou').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      throw new Error(json.error || '未知錯誤');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.querySelector('span').textContent = '送出問卷';
+    errDiv.textContent = '送出失敗，請稍後再試。（' + err.message + '）';
+    errDiv.style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
