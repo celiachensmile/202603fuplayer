@@ -923,10 +923,13 @@ body {
         結業後 6 個月免費進入富玩家私域社群持續媒合
       </div>
     </div>
-    <a class="btn-cta" href="#" onclick="alert('請替換為正式報名頁連結');return false;">
-      了解富玩家顧問實踐營
+    <button class="btn-cta" id="reserveBtn" onclick="handleReserve()">
+      預約報名・優先通知我
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+    </button>
+    <div id="reserveConfirm" style="display:none;margin-top:16px;background:#e8f5f0;border:1px solid #A8D5C5;border-radius:12px;padding:16px 20px;font-size:14px;color:#2d6a56;text-align:center;line-height:1.7;">
+      ✅ 已收到您的預約申請！<br>我們將以您填寫的 Email 優先通知開課資訊。
+    </div>
   </div>
 </div>
 
@@ -935,6 +938,16 @@ body {
 //  STATE
 // ════════════════════════════════════════
 let q9Skipped = false; // true when Q9 = 0
+
+function handleReserve() {
+  const btn = document.getElementById('reserveBtn');
+  const confirm = document.getElementById('reserveConfirm');
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+  btn.style.cursor = 'default';
+  btn.innerHTML = '✅ 已預約報名';
+  confirm.style.display = 'block';
+}
 
 // Required questions when Q9 is NOT 0
 const REQUIRED_FULL = ['q1','q2','q3','q4','q5','q6','q7','q9','q10','q12','q13','q14','q15','q16','q17'];
