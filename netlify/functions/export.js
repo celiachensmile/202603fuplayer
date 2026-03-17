@@ -22,14 +22,14 @@ async function getAllResponses() {
 }
 
 function buildCSV(rows) {
-  const headers = ['#', '提交時間', 'Q1年齡', 'Q2職涯身份', 'Q3專業領域', 'Q4年資', 'Q5AI衝擊', 'Q6職涯心情', 'Q7擔憂', 'Q8已採取行動', 'Q9顧問興趣', 'Q10顧問障礙', 'Q11顧問方向', 'Q12每月時間', 'Q13希望協助', 'Q14學習形式', 'Q15定價', 'Q16報名決策', 'Q17對實踐營反應', 'Q18最吸引環節', 'Q19想法', 'Q20姓名', 'Q21Email'];
+  const headers = ['#', '提交時間', 'Q1年齡', 'Q2職涯身份', 'Q3專業領域', 'Q4年資', 'Q5AI衝擊', 'Q6職涯心情', 'Q7擔憂', 'Q8已採取行動', 'Q9第二人生方向', 'Q10顧問興趣', 'Q11顧問障礙', 'Q12顧問方向', 'Q13每月時間', 'Q14希望協助', 'Q15學習形式', 'Q16定價', 'Q17報名決策', 'Q18對實踐營反應', 'Q19最吸引環節', 'Q20想法', 'Q21姓名', 'Q22Email'];
   const esc = v => {
     if (v == null) return '';
     const s = String(v).replace(/"/g, '""');
     return /[",\n\r]/.test(s) ? `"${s}"` : s;
   };
   const lines = [headers.map(esc).join(',')];
-  rows.forEach(r => lines.push([r.id, r.submitted_at, r.q1, r.q2, r.q3, r.q4, r.q5, r.q6, r.q7, r.q8, r.q9, r.q10, r.q11, r.q12, r.q13, r.q14, r.q15, r.q16, r.q17, r.q18, r.q19, r.q20, r.q21].map(esc).join(',')));
+  rows.forEach(r => lines.push([r.id, r.submitted_at, r.q1, r.q2, r.q3, r.q4, r.q5, r.q6, r.q7, r.q8, r.q9, r.q10, r.q11, r.q12, r.q13, r.q14, r.q15, r.q16, r.q17, r.q18, r.q19, r.q20, r.q21, r.q22].map(esc).join(',')));
   return '\uFEFF' + lines.join('\r\n');
 }
 

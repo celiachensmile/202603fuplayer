@@ -29,9 +29,10 @@ exports.handler = async (event) => {
       id, submitted_at: now,
       q1: d.q1||null, q2: fmt(d.q2), q3: fmt(d.q3), q4: d.q4||null,
       q5: d.q5||null, q6: d.q6||null, q7: fmt(d.q7), q8: fmt(d.q8),
-      q9: d.q9||null, q10: fmt(d.q10), q11: d.q11||null, q12: d.q12||null,
-      q13: fmt(d.q13), q14: fmt(d.q14), q15: d.q15||null, q16: fmt(d.q16),
-      q17: d.q17||null, q18: fmt(d.q18), q19: d.q19||null, q20: d.q20||null, q21: d.q21||null
+      q9: fmt(d.q9),
+      q10: d.q10||null, q11: fmt(d.q11), q12: d.q12||null, q13: d.q13||null,
+      q14: fmt(d.q14), q15: fmt(d.q15), q16: d.q16||null, q17: fmt(d.q17),
+      q18: d.q18||null, q19: fmt(d.q19), q20: d.q20||null, q21: d.q21||null, q22: d.q22||null
     };
 
     await store.setJSON(`response:${id}`, record);

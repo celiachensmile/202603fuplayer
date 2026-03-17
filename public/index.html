@@ -462,9 +462,9 @@ body {
 <!-- ══ HERO ══════════════════════════════ -->
 <header class="hero">
   <div class="hero-label">富玩家召喚</div>
-  <h1>你準備好迎接<br><em>百歲人生新職涯</em>了嗎？</h1>
+  <h1>你準備好迎接<br><em>第二人生新職涯</em>了嗎？</h1>
   <p class="hero-desc">AI 正在重塑職場、台灣已進入超高齡社會。<br>每一位思考「下一步怎麼走」的資深職場人，<br>都值得<br>一份認真的準備。</p>
-  <div class="hero-pill">填完問卷立即獲得一份《<strong>百歲人生新職涯檢測建議報告</strong>》<br>同時有機會啟動新職涯媒合機會</div>
+  <div class="hero-pill">填完問卷立即獲得一份《<strong>第二人生新職涯檢測建議報告</strong>》<br>同時有機會啟動新職涯媒合機會</div>
 </header>
 
 <!-- ══ PROGRESS ══════════════════════════ -->
@@ -588,7 +588,7 @@ body {
   <!-- Q6 -->
   <div class="q-card a2" id="q6">
     <div class="q-header"><span class="q-tag">Q6</span><span class="q-req">必填</span></div>
-    <div class="q-title">關於「百歲人生新職涯」，哪一句話最貼近你現在的心情？</div>
+    <div class="q-title">關於「第二人生新職涯」，哪一句話最貼近你現在的心情？</div>
     <div class="choices" data-type="single" data-name="q6">
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">還好，我對現在的狀態滿意</span></label>
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">有些焦慮，但還在觀望</span></label>
@@ -604,7 +604,7 @@ body {
   <!-- Q7 -->
   <div class="q-card a2" id="q7">
     <div class="q-header"><span class="q-tag">Q7</span><span class="q-req">必填</span></div>
-    <div class="q-title">說到百歲人生新職涯，你最擔心哪些事？<small style="font-weight:400;color:var(--ink-soft)">（可複選，最多 3 項）</small></div>
+    <div class="q-title">說到第二人生新職涯，你最擔心哪些事？<small style="font-weight:400;color:var(--ink-soft)">（可複選，最多 3 項）</small></div>
     <div class="choices" data-type="multi" data-max="3" data-name="q7">
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">被公司資遣或提早退休，收入來源中斷</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">退休金不夠，無法維持生活品質</span></label>
@@ -637,11 +637,26 @@ body {
     <div class="other-wrap" id="q8ow"><input class="other-input" id="q8oi" placeholder="請填寫你已採取的行動…" type="text"></div>
   </div>
 
-  <!-- Q9（移至第二部分，量表 0–5，0 = 跳題至 Q20） -->
+  <!-- Q9 -->
   <div class="q-card a2" id="q9">
     <div class="q-header"><span class="q-tag">Q9</span><span class="q-req">必填</span></div>
+    <div class="q-title">你預期中的第二人生新職涯可能會是哪些方向？<small style="font-weight:400;color:var(--ink-soft)">（可複選，最多 3 項）</small></div>
+    <div class="choices" data-type="multi" data-max="3" data-name="q9">
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">專業顧問／顧問型服務（企業顧問、專案顧問、高階教練等）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">自由接案及專業服務者（行銷企劃、活動公關、設計、影音拍攝、網站製作、課程講師、企業內訓、專案PM、顧問型執行者等）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">兼職顧問／董事／顧問委員（企業外部專家、獨立董監等）</span></label>
+      <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">微型創業（加盟連鎖、獨立開店、產品代理、網路電商等）</span></label>
+      <label class="choice-row other-trigger" data-other="q9ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+    </div>
+    <div class="other-wrap" id="q9ow"><input class="other-input" id="q9oi" placeholder="請填寫你預期的方向…" type="text"></div>
+    <div class="err-msg">請至少選擇一個選項（最多 3 項）</div>
+  </div>
+
+  <!-- Q10（移至第二部分，量表 0–5，0 = 跳題至 Q20） -->
+  <div class="q-card a2" id="q10">
+    <div class="q-header"><span class="q-tag">Q10</span><span class="q-req">必填</span></div>
     <div class="q-title">你對「將自己的專業轉化為顧問服務、對外接案」這個方向有多大興趣？</div>
-    <div class="scale-wrap" data-name="q9" id="q9scale">
+    <div class="scale-wrap" data-name="q10" id="q10scale">
       <div class="scale-labels"><span>0 完全沒興趣</span><span>5 非常有興趣</span></div>
       <div class="scale-btns">
         <button type="button" class="scale-btn" data-val="0">0</button>
@@ -671,11 +686,11 @@ body {
     <span class="sec-bg-num">03</span>
   </div>
 
-  <!-- Q10 -->
-  <div class="q-card a3" id="q10">
-    <div class="q-header"><span class="q-tag">Q10</span><span class="q-req">必填</span></div>
+  <!-- Q11 -->
+  <div class="q-card a3" id="q11">
+    <div class="q-header"><span class="q-tag">Q11</span><span class="q-req">必填</span></div>
     <div class="q-title">如果你考慮成為顧問，目前最大的障礙是什麼？<small style="font-weight:400;color:var(--ink-soft)">（可複選）</small></div>
-    <div class="choices" data-type="multi" data-name="q10">
+    <div class="choices" data-type="multi" data-name="q11">
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">不知道自己的專業是否有市場價值</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">不知道如何開發客戶、找到第一個案子</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">不懂一人公司的財稅與合約架構</span></label>
@@ -685,25 +700,25 @@ body {
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">沒有足夠的人脈與業界連結</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">心理上還沒準備好脫離組織</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">目前還沒有考慮成為顧問</span></label>
-      <label class="choice-row other-trigger" data-other="q10ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+      <label class="choice-row other-trigger" data-other="q11ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
     </div>
-    <div class="other-wrap" id="q10ow"><input class="other-input" id="q10oi" placeholder="請填寫你的障礙…" type="text"></div>
+    <div class="other-wrap" id="q11ow"><input class="other-input" id="q11oi" placeholder="請填寫你的障礙…" type="text"></div>
     <div class="err-msg">請至少選擇一個選項</div>
-  </div>
-
-  <!-- Q11 -->
-  <div class="q-card a3" id="q11">
-    <div class="q-header"><span class="q-tag">Q11</span><span class="q-opt-tag">選填</span></div>
-    <div class="q-title">如果你要提供顧問服務，你最希望在哪個領域發揮？</div>
-    <div class="q-hint">例如：供應鏈管理優化、中小企業人才招募、半導體客戶關係管理……</div>
-    <textarea class="q-textarea" data-name="q11" placeholder="請簡短描述你的專業領域與方向……" rows="3"></textarea>
   </div>
 
   <!-- Q12 -->
   <div class="q-card a3" id="q12">
-    <div class="q-header"><span class="q-tag">Q12</span><span class="q-req">必填</span></div>
+    <div class="q-header"><span class="q-tag">Q12</span><span class="q-opt-tag">選填</span></div>
+    <div class="q-title">如果你要提供顧問服務，你最希望在哪個領域發揮？</div>
+    <div class="q-hint">例如：供應鏈管理優化、中小企業人才招募、半導體客戶關係管理……</div>
+    <textarea class="q-textarea" data-name="q12" placeholder="請簡短描述你的專業領域與方向……" rows="3"></textarea>
+  </div>
+
+  <!-- Q13 -->
+  <div class="q-card a3" id="q13">
+    <div class="q-header"><span class="q-tag">Q13</span><span class="q-req">必填</span></div>
     <div class="q-title">如果開始接顧問案，你每月願意投入的時間大約？</div>
-    <div class="choices" data-type="single" data-name="q12">
+    <div class="choices" data-type="single" data-name="q13">
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">4 小時以內（非常輕量，試水溫）</span></label>
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">4–8 小時（副業性質）</span></label>
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">8–16 小時（正式斜槓）</span></label>
@@ -722,11 +737,11 @@ body {
     <span class="sec-bg-num">04</span>
   </div>
 
-  <!-- Q13 -->
-  <div class="q-card a4" id="q13">
-    <div class="q-header"><span class="q-tag">Q13</span><span class="q-req">必填</span></div>
+  <!-- Q14 -->
+  <div class="q-card a4" id="q14">
+    <div class="q-header"><span class="q-tag">Q14</span><span class="q-req">必填</span></div>
     <div class="q-title">你最希望得到哪些方面的協助？<small style="font-weight:400;color:var(--ink-soft)">（可複選，最多 4 項）</small></div>
-    <div class="choices" data-type="multi" data-max="4" data-name="q13">
+    <div class="choices" data-type="multi" data-max="4" data-name="q14">
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">找出自己的顧問利基與市場定位</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">學習顧問提案與客戶溝通技巧</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">掌握一人公司財稅與法律基礎</span></label>
@@ -735,34 +750,34 @@ body {
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">實際練習接案，取得真實案例</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">連結同齡志同道合的夥伴社群</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">媒合企業客戶，直接創造收入機會</span></label>
-      <label class="choice-row other-trigger" data-other="q13ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+      <label class="choice-row other-trigger" data-other="q14ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
     </div>
-    <div class="other-wrap" id="q13ow"><input class="other-input" id="q13oi" placeholder="請填寫你希望得到的協助…" type="text"></div>
+    <div class="other-wrap" id="q14ow"><input class="other-input" id="q14oi" placeholder="請填寫你希望得到的協助…" type="text"></div>
     <div class="err-msg">請至少選擇一個選項（最多 4 項）</div>
   </div>
 
-  <!-- Q14 -->
-  <div class="q-card a4" id="q14">
-    <div class="q-header"><span class="q-tag">Q14</span><span class="q-req">必填</span></div>
+  <!-- Q15 -->
+  <div class="q-card a4" id="q15">
+    <div class="q-header"><span class="q-tag">Q15</span><span class="q-req">必填</span></div>
     <div class="q-title">你偏好哪種學習與參與形式？<small style="font-weight:400;color:var(--ink-soft)">（可複選）</small></div>
-    <div class="choices" data-type="multi" data-name="q14">
+    <div class="choices" data-type="multi" data-name="q15">
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">密集工作坊（2–3 天線下集中）</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">週末半日小班課（每月 1–2 次）</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">線上直播課（彈性時間）</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">線上自學影音課程（自行安排進度）</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">私密社群＋定期線下媒合聚會</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">一對一個人諮詢 / 輔導</span></label>
-      <label class="choice-row other-trigger" data-other="q14ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+      <label class="choice-row other-trigger" data-other="q15ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
     </div>
-    <div class="other-wrap" id="q14ow"><input class="other-input" id="q14oi" placeholder="請填寫你偏好的參與形式…" type="text"></div>
+    <div class="other-wrap" id="q15ow"><input class="other-input" id="q15oi" placeholder="請填寫你偏好的參與形式…" type="text"></div>
     <div class="err-msg">請至少選擇一個選項</div>
   </div>
 
-  <!-- Q15 -->
-  <div class="q-card a4" id="q15">
-    <div class="q-header"><span class="q-tag">Q15</span><span class="q-req">必填</span></div>
+  <!-- Q16 -->
+  <div class="q-card a4" id="q16">
+    <div class="q-header"><span class="q-tag">Q16</span><span class="q-req">必填</span></div>
     <div class="q-title">如果有一個為期週末 2–3 天的實戰型「顧問轉型工作坊」，你願意投資的價格範圍？</div>
-    <div class="price-grid" data-name="q15">
+    <div class="price-grid" data-name="q16">
       <div class="price-card" data-val="NT$10,000以下"><span class="price-amt">$10,000</span><span class="price-sub">以下</span></div>
       <div class="price-card" data-val="NT$10,000–19,999"><span class="price-amt">$1–2 萬</span><span class="price-sub">NT$10,000–19,999</span></div>
       <div class="price-card" data-val="NT$20,000–29,999"><span class="price-amt">$2–3 萬</span><span class="price-sub">NT$20,000–29,999</span></div>
@@ -772,11 +787,11 @@ body {
     <div class="err-msg">請選擇一個價格區間</div>
   </div>
 
-  <!-- Q16 -->
-  <div class="q-card a4" id="q16">
-    <div class="q-header"><span class="q-tag">Q16</span><span class="q-req">必填</span></div>
+  <!-- Q17 -->
+  <div class="q-card a4" id="q17">
+    <div class="q-header"><span class="q-tag">Q17</span><span class="q-req">必填</span></div>
     <div class="q-title">你最在乎什麼，才會決定參加這樣的課程？<small style="font-weight:400;color:var(--ink-soft)">（可複選，最多 3 項）</small></div>
-    <div class="choices" data-type="multi" data-max="3" data-name="q16">
+    <div class="choices" data-type="multi" data-max="3" data-name="q17">
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">課程後有真實的接案機會或媒合</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">有實際操作演練，不只是聽講</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">講師有真實顧問接案實績</span></label>
@@ -784,9 +799,9 @@ body {
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">同學的品質（同齡資深工作者）</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">可取得顧問資歷 / 結業證書</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">課程費用合理</span></label>
-      <label class="choice-row other-trigger" data-other="q16ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+      <label class="choice-row other-trigger" data-other="q17ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
     </div>
-    <div class="other-wrap" id="q16ow"><input class="other-input" id="q16oi" placeholder="請填寫你的決策關鍵…" type="text"></div>
+    <div class="other-wrap" id="q17ow"><input class="other-input" id="q17oi" placeholder="請填寫你的決策關鍵…" type="text"></div>
     <div class="err-msg">請至少選擇一個選項（最多 3 項）</div>
   </div>
 </div>
@@ -804,27 +819,27 @@ body {
     今周學堂將於 <strong>2026 年 5 月</strong> 舉辦首梯「富玩家顧問實踐營」——這是一個<strong>週末 2–3 天的實戰工作坊</strong>，你將與 6 位真實顧問師資一起，從自我探索、顧問思維、個人品牌到 AI 工具，完整走過顧問轉型的每個關鍵環節，最後在 <strong>Demo Day</strong> 向真實的企業 / NPO 客戶提案，並有機會取得委任合約，正式列入你的職涯履歷。
   </div>
 
-  <!-- Q17 -->
-  <div class="q-card a5" id="q17">
-    <div class="q-header"><span class="q-tag">Q17</span><span class="q-req">必填</span></div>
+  <!-- Q18 -->
+  <div class="q-card a5" id="q18">
+    <div class="q-header"><span class="q-tag">Q18</span><span class="q-req">必填</span></div>
     <div class="q-title">看到以上介紹，你的第一反應是？</div>
-    <div class="choices" data-type="single" data-name="q17">
+    <div class="choices" data-type="single" data-name="q18">
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">非常有興趣，想立刻了解更多</span></label>
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">有興趣，但還需要更多資訊</span></label>
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">有點興趣，但時間 / 費用需要考慮</span></label>
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">目前不適合，但未來可能</span></label>
       <label class="choice-row"><span class="ctrl"></span><span class="choice-text">這不是我目前需要的</span></label>
-      <label class="choice-row other-trigger" data-other="q17ow"><span class="ctrl"></span><span class="choice-text">其他</span></label>
+      <label class="choice-row other-trigger" data-other="q18ow"><span class="ctrl"></span><span class="choice-text">其他</span></label>
     </div>
-    <div class="other-wrap" id="q17ow"><input class="other-input" id="q17oi" placeholder="請填寫你的第一反應…" type="text"></div>
+    <div class="other-wrap" id="q18ow"><input class="other-input" id="q18oi" placeholder="請填寫你的第一反應…" type="text"></div>
     <div class="err-msg">請選擇一個選項</div>
   </div>
 
-  <!-- Q18 -->
-  <div class="q-card a5" id="q18">
-    <div class="q-header"><span class="q-tag">Q18</span><span class="q-opt-tag">選填</span></div>
+  <!-- Q19 -->
+  <div class="q-card a5" id="q19">
+    <div class="q-header"><span class="q-tag">Q19</span><span class="q-opt-tag">選填</span></div>
     <div class="q-title">「富玩家顧問實踐營」最吸引你的環節是？<small style="font-weight:400;color:var(--ink-soft)">（可複選）</small></div>
-    <div class="choices" data-type="multi" data-name="q18">
+    <div class="choices" data-type="multi" data-name="q19">
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">個人品牌探索工作坊（找到你的獨特定位）</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">顧問思維與客戶溝通技巧</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">一人公司財稅基礎（避免接案踩雷）</span></label>
@@ -832,17 +847,17 @@ body {
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">Demo Day 真實提案與媒合機會</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">可列入履歷的顧問委任書</span></label>
       <label class="choice-row"><span class="ctrl chk"></span><span class="choice-text">結業後的持續媒合支援</span></label>
-      <label class="choice-row other-trigger" data-other="q18ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
+      <label class="choice-row other-trigger" data-other="q19ow"><span class="ctrl chk"></span><span class="choice-text">其他</span></label>
     </div>
-    <div class="other-wrap" id="q18ow"><input class="other-input" id="q18oi" placeholder="請填寫最吸引你的環節…" type="text"></div>
+    <div class="other-wrap" id="q19ow"><input class="other-input" id="q19oi" placeholder="請填寫最吸引你的環節…" type="text"></div>
   </div>
 
-  <!-- Q19 -->
-  <div class="q-card a5" id="q19">
-    <div class="q-header"><span class="q-tag">Q19</span><span class="q-opt-tag">選填</span></div>
+  <!-- Q20 -->
+  <div class="q-card a5" id="q20">
+    <div class="q-header"><span class="q-tag">Q20</span><span class="q-opt-tag">選填</span></div>
     <div class="q-title">關於「顧問職涯轉型」，你還有什麼問題或想法想告訴我們？</div>
     <div class="q-hint">你的每一則回覆我們都會認真閱讀，也可能成為我們下一期內容的靈感來源。</div>
-    <textarea class="q-textarea" data-name="q19" placeholder="在這裡自由分享……" rows="4"></textarea>
+    <textarea class="q-textarea" data-name="q20" placeholder="在這裡自由分享……" rows="4"></textarea>
   </div>
 </div>
 
@@ -851,17 +866,17 @@ body {
 <!-- 跳題提示（Q9=0 時顯示） -->
 <div class="skip-msg" id="skipMsg">
   <div class="skip-msg-title">感謝你的誠實回答！</div>
-  <div class="skip-msg-body">由於你目前暫無顧問轉型興趣，接下來只需填寫聯絡資訊，即可取得《百歲人生新職涯檢測建議報告》。</div>
+  <div class="skip-msg-body">由於你目前暫無顧問轉型興趣，接下來只需填寫聯絡資訊，即可取得《第二人生新職涯檢測建議報告》。</div>
 </div>
 
 <!-- ══ Q20–21（必填，永遠顯示） ════════ -->
 <div class="sec-block" style="margin-bottom:24px;">
-  <div class="q-card a1" id="q20card">
-    <div class="q-header"><span class="q-tag">Q20–21</span><span class="q-req">必填</span></div>
-    <div class="q-title">留下你的聯絡資訊，用於發送《百歲人生新職涯檢測建議報告》。</div>
+  <div class="q-card a1" id="q21card">
+    <div class="q-header"><span class="q-tag">Q21–22</span><span class="q-req">必填</span></div>
+    <div class="q-title">留下你的聯絡資訊，用於發送《第二人生新職涯檢測建議報告》。</div>
     <div class="input-pair">
-      <input class="q-input" id="q20input" data-name="q20" placeholder="你的姓名" type="text">
-      <input class="q-input" id="q21input" data-name="q21" placeholder="Email" type="email">
+      <input class="q-input" id="q21input" data-name="q21" placeholder="你的姓名" type="text">
+      <input class="q-input" id="q22input" data-name="q22" placeholder="Email" type="email">
     </div>
     <div class="err-msg" id="q2021err">請填寫姓名與 Email</div>
   </div>
@@ -885,7 +900,7 @@ body {
 
 <!-- ══ SUBMIT ══════════════════════════ -->
 <div class="submit-area">
-  <p class="submit-note">填完即可取得《百歲人生新職涯檢測建議報告》<br>感謝撥冗填答。</p>
+  <p class="submit-note">填完即可取得《第二人生新職涯檢測建議報告》<br>感謝撥冗填答。</p>
   <button type="submit" class="btn-submit" id="submitBtn" disabled>
     <span>請先勾選個資聲明再送出</span>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -903,7 +918,7 @@ body {
       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
     <div class="ty-title">感謝你完成填答！</div>
-    <p class="ty-sub">你的回答對我們非常珍貴。<br>我們將盡快將《百歲人生新職涯檢測建議報告》發送至你的 Email，請留意收件匣。</p>
+    <p class="ty-sub">你的回答對我們非常珍貴。<br>我們將盡快將《第二人生新職涯檢測建議報告》發送至你的 Email，請留意收件匣。</p>
     <div class="offer-card">
       <div class="offer-hl">同時啟動你的新職涯媒合機會</div>
       <div class="offer-item">
@@ -937,7 +952,7 @@ body {
 // ════════════════════════════════════════
 //  STATE
 // ════════════════════════════════════════
-let q9Skipped = false; // true when Q9 = 0
+let q10Skipped = false; // true when Q9 = 0
 
 function handleReserve() {
   const btn = document.getElementById('reserveBtn');
@@ -950,12 +965,12 @@ function handleReserve() {
 }
 
 // Required questions when Q9 is NOT 0
-const REQUIRED_FULL = ['q1','q2','q3','q4','q5','q6','q7','q9','q10','q12','q13','q14','q15','q16','q17'];
+const REQUIRED_FULL = ['q1','q2','q3','q4','q5','q6','q7','q9','q10','q11','q13','q14','q15','q16','q17','q18'];
 // Required questions when Q9 = 0 (skip sections 3-5)
-const REQUIRED_SKIP = ['q1','q2','q3','q4','q5','q6','q7','q9'];
+const REQUIRED_SKIP = ['q1','q2','q3','q4','q5','q6','q7','q9','q10'];
 
 function getRequiredQs() {
-  return q9Skipped ? REQUIRED_SKIP : REQUIRED_FULL;
+  return q10Skipped ? REQUIRED_SKIP : REQUIRED_FULL;
 }
 
 // ════════════════════════════════════════
@@ -1013,17 +1028,17 @@ document.querySelectorAll('.scale-wrap').forEach(wrap => {
       if (wrap.id === 'q9scale') {
         const val = btn.dataset.val;
         if (val === '0') {
-          q9Skipped = true;
+          q10Skipped = true;
           // 隱藏 section 3–5
           const skip = document.getElementById('skipSections');
           skip.style.display = 'none';
           document.getElementById('skipMsg').classList.add('show');
           // 平滑跳到 Q20 聯絡資訊
           setTimeout(() => {
-            document.getElementById('q20card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('q21card').scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 150);
         } else {
-          q9Skipped = false;
+          q10Skipped = false;
           document.getElementById('skipSections').style.display = 'block';
           document.getElementById('skipMsg').classList.remove('show');
         }
@@ -1056,9 +1071,9 @@ document.querySelectorAll('.price-grid').forEach(grid => {
   const el = document.getElementById(id);
   if (el) {
     el.addEventListener('input', () => {
-      const card = document.getElementById('q20card');
+      const card = document.getElementById('q21card');
       const name = el.value.trim();
-      const email = document.getElementById('q21input')?.value.trim();
+      const email = document.getElementById('q22input')?.value.trim();
       if (name && email) {
         card?.classList.add('answered');
         card?.classList.remove('err');
@@ -1072,8 +1087,8 @@ document.querySelectorAll('.price-grid').forEach(grid => {
 //  PROGRESS
 // ════════════════════════════════════════
 function isAnswered(id) {
-  if (id === 'q20' || id === 'q21') {
-    return !!(document.getElementById('q20input')?.value.trim() && document.getElementById('q21input')?.value.trim());
+  if (id === 'q21' || id === 'q22') {
+    return !!(document.getElementById('q21input')?.value.trim() && document.getElementById('q22input')?.value.trim());
   }
   const card = document.getElementById(id);
   return card && card.classList.contains('answered');
@@ -1081,8 +1096,8 @@ function isAnswered(id) {
 
 function updateProgress() {
   const req = getRequiredQs();
-  const contactDone = !!(document.getElementById('q20input')?.value.trim() && document.getElementById('q21input')?.value.trim());
-  const qDone = req.filter(id => isAnswered(id) || (id === 'q9' && document.querySelector('#q9 .scale-btn.sel'))).length;
+  const contactDone = !!(document.getElementById('q21input')?.value.trim() && document.getElementById('q22input')?.value.trim());
+  const qDone = req.filter(id => isAnswered(id) || (id === 'q10' && document.querySelector('#q10 .scale-btn.sel'))).length;
   const total = req.length + 2; // +2 for q20, q21
   const done = qDone + (contactDone ? 2 : 0);
   const pct = Math.round(done / total * 100);
@@ -1092,7 +1107,7 @@ function updateProgress() {
 
   const steps = document.querySelectorAll('.p-step');
   const secRanges = [
-    ['q1','q2','q3','q4'],['q5','q6','q7','q8','q9'],['q10','q11','q12'],['q13','q14','q15','q16'],['q17','q18','q19']
+    ['q1','q2','q3','q4'],['q5','q6','q7','q8','q9','q10'],['q11','q12','q13'],['q14','q15','q16','q17'],['q18','q19','q20']
   ];
   secRanges.forEach((range, i) => {
     const reqInSec = range.filter(r => req.includes(r));
@@ -1169,10 +1184,10 @@ function collectData() {
     if (v) data[ta.dataset.name] = v;
   });
 
-  const name = document.getElementById('q20input')?.value.trim();
-  const email = document.getElementById('q21input')?.value.trim();
-  if (name) data.q20 = name;
-  if (email) data.q21 = email;
+  const name = document.getElementById('q21input')?.value.trim();
+  const email = document.getElementById('q22input')?.value.trim();
+  if (name) data.q21 = name;
+  if (email) data.q22 = email;
 
   return data;
 }
@@ -1196,9 +1211,9 @@ function validate() {
   });
 
   // Q20/Q21 required
-  const nameVal = document.getElementById('q20input')?.value.trim();
-  const emailVal = document.getElementById('q21input')?.value.trim();
-  const q20card = document.getElementById('q20card');
+  const nameVal = document.getElementById('q21input')?.value.trim();
+  const emailVal = document.getElementById('q22input')?.value.trim();
+  const q20card = document.getElementById('q21card');
   if (!nameVal || !emailVal) {
     if (q20card) q20card.classList.add('err');
     document.getElementById('q2021err').style.display = 'block';

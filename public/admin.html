@@ -439,41 +439,43 @@ function renderOverview() {
   el.innerHTML = `
   <div class="chart-grid">
     ${chartCardDonut('c-q1','Q1 年齡分布','填答者年齡區間')}
-    ${chartCardDonut('c-q17','Q17 對實踐營的反應','首次看到課程介紹的反應')}
-    ${chartCardDonut('c-q15','Q15 願意投資價格','工作坊費用預期')}
+    ${chartCardDonut('c-q18','Q18 對實踐營的反應','首次看到課程介紹的反應')}
+    ${chartCardDonut('c-q16','Q16 願意投資價格','工作坊費用預期')}
     ${chartCardDonut('c-q4','Q4 工作年資','主要專業領域累積年資')}
   </div>
   <div style="height:18px"></div>
   <div class="chart-grid">
     ${chartCardBar('c-q7','Q7 職涯擔憂（複選）','最多 3 項，佔總人數比')}
-    ${chartCardBar('c-q10','Q10 顧問障礙（複選）','目前最大障礙')}
+    ${chartCardBar('c-q11','Q11 顧問障礙（複選）','目前最大障礙')}
   </div>
   <div style="height:18px"></div>
   <div class="chart-grid">
-    ${chartCardBar('c-q13','Q13 希望得到的協助（複選）','最多 4 項')}
-    ${chartCardBar('c-q16','Q16 報名決策關鍵（複選）','最多 3 項')}
+    ${chartCardBar('c-q14','Q14 希望得到的協助（複選）','最多 4 項')}
+    ${chartCardBar('c-q17','Q17 報名決策關鍵（複選）','最多 3 項')}
   </div>
   <div style="height:18px"></div>
   <div class="chart-grid">
-    ${chartCardDonut('c-q9','Q9 顧問興趣分數','1–5 分量表分布')}
+    ${chartCardBar('c-q9','Q9 第二人生新職涯方向（複選）','預期發展方向')}
+    ${chartCardDonut('c-q10','Q10 顧問興趣分數','1–5 分量表分布')}
     ${chartCardDonut('c-q5','Q5 AI 衝擊感受','1–5 分量表分布')}
-    ${chartCardDonut('c-q12','Q12 每月可投入時間','')}
+    ${chartCardDonut('c-q13','Q13 每月可投入時間','')}
     ${chartCardDonut('c-q6','Q6 職涯心情','目前心情狀態')}
   </div>
   `;
 
   // Draw charts
   drawDonut('c-q1', c.q1);
-  drawDonut('c-q17', c.q17, true);
-  drawDonut('c-q15', c.q15, true);
+  drawDonut('c-q18', c.q18, true);
+  drawDonut('c-q16', c.q16, true);
   drawDonut('c-q4', c.q4);
   drawBars('c-q7', c.q7, '#C4724A');
-  drawBars('c-q10', c.q10, '#3E7FB5');
-  drawBars('c-q13', c.q13, '#4D8C78');
-  drawBars('c-q16', c.q16, '#B5893E');
-  drawDonut('c-q9', c.q9);
+  drawBars('c-q11', c.q11, '#3E7FB5');
+  drawBars('c-q14', c.q14, '#4D8C78');
+  drawBars('c-q17', c.q17, '#B5893E');
+  drawBars('c-q9', c.q9, '#5B7FA6');
+  drawDonut('c-q10', c.q10);
   drawDonut('c-q5', c.q5);
-  drawDonut('c-q12', c.q12);
+  drawDonut('c-q13', c.q13);
   drawDonut('c-q6', c.q6);
 }
 
@@ -527,13 +529,13 @@ function renderCross() {
   el.innerHTML = `
   <div class="chart-card" style="margin-bottom:18px">
     <div class="cross-section">
-      <div class="cross-title">交叉分析一：年齡層 × 顧問興趣（Q1 × Q9）</div>
+      <div class="cross-title">交叉分析一：年齡層 × 顧問興趣（Q1 × Q10）</div>
       ${buildCrossTable(ca.ageInterest, '年齡層', ['1','2','3','4','5'])}
     </div>
   </div>
   <div class="chart-card" style="margin-bottom:18px">
     <div class="cross-section">
-      <div class="cross-title">交叉分析二：AI 衝擊感受 × 顧問興趣（Q5 × Q9）</div>
+      <div class="cross-title">交叉分析二：AI 衝擊感受 × 顧問興趣（Q5 × Q10）</div>
       ${buildCrossTable(ca.aiInterest, 'AI 衝擊分數', ['1','2','3','4','5'])}
     </div>
   </div>
@@ -545,13 +547,13 @@ function renderCross() {
   </div>
   <div class="chart-card" style="margin-bottom:18px">
     <div class="cross-section">
-      <div class="cross-title">交叉分析四：職涯身份 × 價格接受度（Q2 × Q15）</div>
+      <div class="cross-title">交叉分析四：職涯身份 × 價格接受度（Q2 × Q16）</div>
       ${buildCrossMultiTable(ca.rolePrice, '職涯身份')}
     </div>
   </div>
   <div class="chart-card" style="margin-bottom:18px">
     <div class="cross-section">
-      <div class="cross-title">交叉分析五：職涯心情 × 顧問障礙（Q6 × Q10）</div>
+      <div class="cross-title">交叉分析五：職涯心情 × 顧問障礙（Q6 × Q11）</div>
       ${buildCrossMultiTable(ca.moodObstacle, '心情狀態')}
     </div>
   </div>`;
@@ -613,8 +615,8 @@ async function renderRecords() {
       <thead><tr>
         <th>#</th><th>提交時間</th><th>Q1 年齡</th><th>Q2 身份</th>
         <th>Q4 年資</th><th>Q5 AI衝擊</th><th>Q6 心情</th>
-        <th>Q9 顧問興趣</th><th>Q15 定價</th><th>Q17 對實踐營</th>
-        <th>Q20 姓名</th><th>Q21 Email</th>
+        <th>Q9 方向</th><th>Q10 顧問興趣</th><th>Q16 定價</th><th>Q18 對實踐營</th>
+        <th>Q21 姓名</th><th>Q22 Email</th>
       </tr></thead>
       <tbody>${rawData.map(r => `<tr>
         <td>${r.id || '—'}</td>
@@ -624,11 +626,11 @@ async function renderRecords() {
         <td>${r.q4 || '—'}</td>
         <td style="text-align:center">${r.q5 || '—'}</td>
         <td class="td-long">${r.q6 || '—'}</td>
-        <td style="text-align:center">${r.q9 || '—'}</td>
-        <td class="td-long">${r.q15 || '—'}</td>
-        <td class="td-long">${r.q17 || '—'}</td>
-        <td>${r.q20 || '—'}</td>
+        <td>${(r.q9||'').replace(/\|/g,', ')||'—'}</td><td style="text-align:center">${r.q10 || '—'}</td>
+        <td class="td-long">${r.q16 || '—'}</td>
+        <td class="td-long">${r.q18 || '—'}</td>
         <td>${r.q21 || '—'}</td>
+        <td>${r.q22 || '—'}</td>
       </tr>`).join('')}
       </tbody>
     </table>
