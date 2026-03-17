@@ -7,8 +7,15 @@ const CORS = {
   'Access-Control-Allow-Headers': 'Content-Type, x-admin-password',
 };
 
+function getBlobStore() {
+  const opts = { name: 'fuplayer-survey', consistency: 'strong' };
+  if (process.env.NETLIFY_SITE_ID) opts.siteID = process.env.NETLIFY_SITE_ID;
+  if (process.env.NETLIFY_TOKEN) opts.token = process.env.NETLIFY_TOKEN;
+  return getStore(opts);
+}
+
 async function getAllResponses() {
-  const store = getStore({ name: 'fuplayer-survey', consistency: 'strong' });
+  const store = getBlobStore();
   const { blobs } = await store.list({ prefix: 'response:' });
   const all = await Promise.all(blobs.map(b => store.get(b.key, { type: 'json' })));
   return all.filter(Boolean).sort((a, b) => (a.submitted_at > b.submitted_at ? 1 : -1));

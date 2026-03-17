@@ -1,5 +1,12 @@
 const { getStore } = require('@netlify/blobs');
 
+function getBlobStore() {
+  const opts = { name: 'fuplayer-survey', consistency: 'strong' };
+  if (process.env.NETLIFY_SITE_ID) opts.siteID = process.env.NETLIFY_SITE_ID;
+  if (process.env.NETLIFY_TOKEN) opts.token = process.env.NETLIFY_TOKEN;
+  return getStore(opts);
+}
+
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
@@ -11,7 +18,7 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: 'Method Not Allowed' }) };
 
   try {
-    const store = getStore({ name: 'fuplayer-survey', consistency: 'strong' });
+    const store = getBlobStore();
     const d = JSON.parse(event.body || '{}');
 
     const fmt = v => Array.isArray(v) ? v.join('|') : (v || null);
