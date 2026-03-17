@@ -17,8 +17,10 @@ function getBlobStore() {
 async function getAllResponses() {
   const store = getBlobStore();
   const { blobs } = await store.list({ prefix: 'response:' });
-  const all = await Promise.all(blobs.map(b => store.get(b.key, { type: 'json' })));
-  return all.filter(Boolean).sort((a, b) => (a.submitted_at > b.submitted_at ? 1 : -1));
+  // 依 blob key 排序（key 包含 base-36 時間戳，可正確按時間排序）
+  const sorted = [...blobs].sort((a, b) => a.key < b.key ? -1 : 1);
+  const all = await Promise.all(sorted.map(b => store.get(b.key, { type: 'json' })));
+  return all.filter(Boolean);
 }
 
 exports.handler = async (event) => {

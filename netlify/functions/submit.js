@@ -89,11 +89,17 @@ async function subscribeToConvertKit(record, personalContent) {
     },
   };
 
-  await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
+  console.log('ConvertKit: calling form', formId, 'for', record.q22);
+  const ckRes = await fetch(`https://api.convertkit.com/v3/forms/${formId}/subscribe`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json; charset=utf-8' },
     body: JSON.stringify(payload),
   });
+  const ckBody = await ckRes.text();
+  console.log('ConvertKit response:', ckRes.status, ckBody);
+  if (!ckRes.ok) {
+    throw new Error(`ConvertKit API error ${ckRes.status}: ${ckBody}`);
+  }
 }
 
 // ── Handler ───────────────────────────────────────────────────
