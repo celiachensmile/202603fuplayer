@@ -616,9 +616,9 @@ async function renderRecords() {
         <th>#</th><th>提交時間</th><th>Q1 年齡</th><th>Q2 身份</th>
         <th>Q4 年資</th><th>Q5 AI衝擊</th><th>Q6 心情</th>
         <th>Q9 方向</th><th>Q10 顧問興趣</th><th>Q16 定價</th><th>Q18 對實踐營</th>
-        <th>Q21 姓名</th><th>Q22 Email</th><th>預約報名</th>
+        <th>Q21 姓名</th><th>Q22 Email</th><th>預約報名</th><th>刪除</th>
       </tr></thead>
-      <tbody>${rawData.map(r => `<tr>
+      <tbody>${rawData.map(r => `<tr id="row-${r.id}">
         <td>${r.id || '—'}</td>
         <td style="white-space:nowrap">${r.submitted_at || '—'}</td>
         <td>${r.q1 || '—'}</td>
@@ -631,7 +631,8 @@ async function renderRecords() {
         <td class="td-long">${r.q18 || '—'}</td>
         <td>${r.q21 || '—'}</td>
         <td>${r.q22 || '—'}</td>
-        <td style="text-align:center">${r.reserved ? '<span style="color:#1a7a4a;font-weight:700;">✅ 已預約</span>' + (r.reserved_at ? `<br><span style="font-size:11px;color:#888">${r.reserved_at}</span>` : '') : '<span style="color:#bbb">—</span>'}</td>
+        <td style="text-align:center">${r.reserved ? '<span style="color:#1a7a4a;font-weight:700;">✅ 已預約</span>' + (r.reserved_at ? '<br><span style="font-size:11px;color:#888">' + r.reserved_at + '</span>' : '') : '<span style="color:#bbb">—</span>'}</td>
+        <td style="text-align:center"><button onclick="deleteRecord('${r.id}')" title="刪除此筆記錄" style="background:none;border:none;cursor:pointer;padding:6px 8px;border-radius:6px;color:#c0392b;font-size:18px;line-height:1;transition:background .15s;" onmouseover="this.style.background='#fdecea'" onmouseout="this.style.background='none'">🗑</button></td>
       </tr>`).join('')}
       </tbody>
     </table>
@@ -641,6 +642,31 @@ async function renderRecords() {
 // ════════════════════════════════════════
 //  EXPORT
 // ════════════════════════════════════════
+// ════════════════════════════════════════
+//  DELETE RECORD
+// ════════════════════════════════════════
+async function deleteRecord(id) {
+  if (!confirm('確定要刪除這筆記錄嗎？此操作無法復原。')) return;
+  // pw 是登入後儲存的全域密碼變數
+  try {
+    const res = await fetch('/api/delete?id=' + encodeURIComponent(id), {
+      method: 'DELETE',
+      headers: { 'x-admin-password': pw },
+    });
+    const json = await res.json();
+    if (json.ok) {
+      const row = document.getElementById('row-' + id);
+      if (row) row.remove();
+      // 同步更新 rawData 陣列
+      if (rawData) rawData = rawData.filter(r => r.id !== id);
+    } else {
+      alert('刪除失敗：' + (json.error || '未知錯誤'));
+    }
+  } catch (e) {
+    alert('刪除失敗：' + e.message);
+  }
+}
+
 function doExport() {
   window.open('/api/export?pw=' + encodeURIComponent(pw), '_blank');
 }
