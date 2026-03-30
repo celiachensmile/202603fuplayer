@@ -1288,8 +1288,9 @@ document.getElementById('surveyForm').addEventListener('submit', async (e) => {
     if (json.ok) {
       lastSubmissionId = json.id || '';
       document.getElementById('formWrap').style.display = 'none';
-      document.getElementById('thankyou').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const ty = document.getElementById('thankyou');
+      ty.style.display = 'block';
+      ty.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       throw new Error(json.error || '未知錯誤');
     }

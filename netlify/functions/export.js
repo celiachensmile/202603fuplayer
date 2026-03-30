@@ -9,8 +9,8 @@ const CORS = {
 
 function getBlobStore() {
   const opts = { name: 'fuplayer-survey', consistency: 'strong' };
-  if (process.env.NETLIFY_SITE_ID) opts.siteID = process.env.NETLIFY_SITE_ID;
-  if (process.env.NETLIFY_TOKEN) opts.token = process.env.NETLIFY_TOKEN;
+  if (process.env.BLOBS_SITE_ID) opts.siteID = process.env.BLOBS_SITE_ID;
+  if (process.env.BLOBS_TOKEN) opts.token = process.env.BLOBS_TOKEN;
   return getStore(opts);
 }
 
