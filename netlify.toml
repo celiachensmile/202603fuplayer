@@ -10,3 +10,19 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
+# 封鎖常見的後台路徑猜測（回首頁，不洩露路徑是否存在）
+[[redirects]]
+  from = "/admin"
+  to = "/"
+  status = 302
+
+[[redirects]]
+  from = "/administrator"
+  to = "/"
+  status = 302
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/"
+  status = 302
